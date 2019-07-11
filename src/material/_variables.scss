@@ -1,0 +1,139 @@
+// <copyright company="Softerra">
+//    Copyright (c) Softerra, Ltd. All rights reserved.
+// </copyright>
+//
+// <summary>
+//    Configuration variables file.
+// </summary>
+
+// Use placeholders for configurable color
+// Placeholder format '{{place-holder-name|modificator-name|modificatorArgument}}'
+// Modiifcators: ['darken', 'lighten'] as argument expect integer - level value. Can be 1->4%, 2->8%, 3->12%....
+// Placeholders (default configuration value):
+// brand-bg                     #ffffff
+// brand-accent-1               #0288d1
+// brand-accent-1-contrast      #ffffff
+// brand-accent-2               #2b579a
+// brand-accent-2-contrast      #ffffff
+// brand-action                 #2196f3
+// brand-action-contrast        #ffffff
+// brand-pane-bg                #fafafa
+// brand-pane-border            #dddddd
+// brand-selected-bg            #c9e0f7
+// brand-selected-border        #62a2e4
+// brand-danger                 #b03c3f
+// brand-danger-contrast        #ffffff
+
+$min-supported-width: 320px;
+
+// Foreground colors
+$foreground-color-1: #000000;
+$foreground-color-2: #2a2a2a;
+$foreground-color-3: #3a3a3a;
+$foreground-color-4: #464646;
+$foreground-color-5: #5f5f5f;
+$foreground-color-6: #696969;
+$foreground-color-7: #767676;
+$foreground-color-8: #8c8c8c;
+$foreground-color-9: #9e9e9e;
+$foreground-color-10: #a4a4a4;
+$foreground-color-11: #d2d2d2;
+$foreground-color-12: #f1f1f1;
+$foreground-color-13: #f9f9f9;
+$foreground-color-default: $foreground-color-4;
+
+// Colors for impotant panes
+$important-pane-bg: $foreground-color-3;
+$important-pane-color: #FFF;
+
+// Warning colors
+$warning-background-color: #bda053;
+$warning-color: #ffffff;
+
+// Operation result colors;
+$operation-result-success-color: #3AB449;
+$operation-result-error-color: '{{brand-danger}}';
+$operation-result-warning-color: #bf9f5d;
+$operation-result-pending-color: #4d4d4d;
+
+// Form Element variable
+$form-element-border-color: #dddddd;
+$form-element-border-dark1: darken($form-element-border-color, 15%);
+$form-element-border-light-1: lighten($form-element-border-color, 5%);
+$form-element-border-light-2: lighten($form-element-border-color, 4%);
+$form-element-placeholder-color: $foreground-color-7;
+$form-element-placeholder-has-value-color: $foreground-color-6;
+
+// Disabled Element
+$disabled-element-color: $foreground-color-9;
+$disabled-element-border-color: #e0e0e0;
+$disabled-element-background-color: #e2e2e2;
+$disabled-element-opacity: 0.5;
+
+// Filter
+$filter-highlight-bg-color: #ffffe8;
+
+// attention
+$attention-color: #ca5100;
+$attention-contrast-color: #fff;
+
+// Icon opacity values.
+$disabled-icon-opacity: 0.35;
+$hover-icon-opacity: 1;
+$default-icon-opacity: 0.75;
+
+
+// Font family
+$font-family: 'Segoe UI', Tahoma, Helvetica, sans-serif;
+
+// Font Sizes
+// Default Size
+$font-size-base: 10pt;
+
+// Large Sizes
+$font-size-lg: 11pt;
+$font-size-xl: 12pt;
+$font-size-xxl: 14pt;
+$font-size-xxxl: 16pt;
+$font-size-huge: 18pt;
+$font-size-xhuge: 20pt;
+$font-size-xxhuge: 22pt;
+
+// Small Sizes
+$font-size-sm: 9pt;
+$font-size-xs: 8pt;
+$font-size-xxs: 7pt;
+
+
+
+$focus-outline-color: #6b6b6b;
+$focus-outline-style: dotted;
+$focus-outline-width: 1px;
+
+// z-indexes
+$z-index-dropdown: 95;
+$z-index-autocomplete: 95;
+$z-index-report-menu: 60;
+
+// Directories
+$dir-images: 'Shared/Img';
+
+// Delay before underlined editor will be marked as invalid,
+// it is required to avoid display editor as invalid on dialog fading.
+$invalid-border-color-delay: 0.4s;
+
+// Common dialog variables
+$dialog-offset-horizontal: 23px;
+
+$dialog-wizard-width: 746px;
+$dialog-wizard-height: 595px;
+$dialog-confirm-min-width: 530px;
+$dialog-confirm-min-height: 250px;
+
+// Icon sizes
+$icon-16-size: 16px;
+$icon-24-size: 24px;
+$icon-32-size: 32px;
+$icon-33-size: 33px;
+
+$hight-resolution-coefficient: 1.5;

@@ -1,0 +1,72 @@
+// <copyright company="Softerra">
+//    Copyright (c) Softerra, Ltd. All rights reserved.
+// </copyright>
+//
+// <summary>
+//    Contains theme styles for material buttons.
+// </summary>
+@import "_variables.scss";
+
+$button-flat-border-color: $form-element-border-color;
+$button-flat-disabled-border-color: lighten($form-element-border-color, 9%);
+$button-flat-disabled-color: lighten($disabled-element-color, 9%);
+$button-raised-color: $foreground-color-3;
+$button-disabled-color: $disabled-element-color;
+$button-disabled-background-color: $disabled-element-background-color;
+
+
+@mixin disabled-button() {
+  color: $button-disabled-color;
+  background-color: $button-disabled-background-color;
+
+  .icon {
+    opacity: $disabled-icon-opacity;
+  }
+}
+
+.mat-button {
+  background-color: #ffffff;
+
+  &:not([disabled]) {
+    &:hover,
+    &.mat-focused {
+      background-color: #f0f0f0;
+    }
+
+    &.mat-primary {
+      color: #0288d1;
+    }
+  }
+
+  &[disabled] {
+    @include disabled-button();
+  }
+
+  &.mat-raised {
+    color: $button-raised-color;
+    background-color: #fafafa;
+
+    &:not([disabled]) {
+      &:hover,
+      &:focus {
+        background-color: #f0f0f0;
+      }
+
+      &.mat-attention {
+        color: $attention-contrast-color;
+        background-color: $attention-color;
+      }
+
+      &.mat-primary {
+        color: #0288d1;
+        background-color: #ffffff;
+
+      }
+    }
+
+    &[disabled] {
+      @include disabled-button();
+    }
+  }
+}
+

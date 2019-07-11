@@ -1,0 +1,56 @@
+// <copyright company="Softerra">
+//    Copyright (c) Softerra, Ltd. All rights reserved.
+// </copyright>
+//
+// <summary>
+//    Contains styles for progress indicator.
+// </summary>
+
+$progress-indicator-dot-size: 3px;
+$progress-indicator-dot-animation-delay: 0.2s;
+$progress-indicator-animation-duration: 3.3s;
+$progress-indicator-z-index: 2;
+
+.progress-indicator {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  width: 100%;
+
+  &.is-backdrop{
+    z-index: $progress-indicator-z-index;
+    height: 100%;
+  }
+
+  .progress-indicator__dots {
+    height: $progress-indicator-dot-size;
+
+    .progress-indicator__dot {
+      position: absolute;
+      width: $progress-indicator-dot-size;
+      height: $progress-indicator-dot-size;
+      animation-duration: $progress-indicator-animation-duration;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-fill-mode: backwards;
+
+      animation-delay: $progress-indicator-dot-animation-delay;
+    }
+
+    .progress-indicator__dot + .progress-indicator__dot {
+      animation-delay: $progress-indicator-dot-animation-delay * 2;
+    }
+
+    .progress-indicator__dot + .progress-indicator__dot + .progress-indicator__dot {
+      animation-delay: $progress-indicator-dot-animation-delay * 3;
+    }
+
+    .progress-indicator__dot + .progress-indicator__dot + .progress-indicator__dot + .progress-indicator__dot {
+      animation-delay: $progress-indicator-dot-animation-delay * 4;
+    }
+
+    .progress-indicator__dot + .progress-indicator__dot + .progress-indicator__dot + .progress-indicator__dot + .progress-indicator__dot {
+      animation-delay: $progress-indicator-dot-animation-delay * 5;
+    }
+  }
+}

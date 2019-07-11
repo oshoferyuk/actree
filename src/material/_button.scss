@@ -1,0 +1,100 @@
+// <copyright company="Softerra">
+//    Copyright (c) Softerra, Ltd. All rights reserved.
+// </copyright>
+//
+// <summary>
+//    Contains overrides for material buttons.
+// </summary>
+@import "_variables.scss";
+
+$button-border-radius: 2px;
+$button-font-size: $font-size-xs;
+$button-fab-padding: 0 6px;
+
+.mat-button {
+  color: purple;
+  font-size: $button-font-size;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  border-radius: $button-border-radius;
+
+  &.mat-raised {
+    &:not([disabled]) {
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.33);
+    }
+  }
+
+  &:not([disabled]) {
+    &.mat-raised,
+    &.mat-fab {
+      &:focus,
+      &:hover {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.33);
+      }
+    }
+  }
+
+  &.mat-primary {
+    font-weight: 400;
+  }
+
+  &.mat-fab {
+    padding: $button-fab-padding;
+    transition-property: box-shadow, transform;
+
+    &.mat-fab-popout {
+      &.ng-hide-remove {
+        animation: 0.1s fab_popout;
+      }
+
+      @keyframes fab_popout {
+        0% {
+          transform: scale(0.5);
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+
+  &.mat-flat {
+    border: 1px solid $form-element-border-color;
+
+    &.mat-primary {
+      border-style: none;
+    }
+
+    &.mat-light{
+      font-weight: 400;
+    }
+  }
+
+  &[disabled] {
+    cursor: auto;
+  }
+
+  &.mat-narrow{
+    min-height: 27px;
+    line-height: 27px;
+  }
+}
+
+.mat-button:first-of-type {
+  margin-left: 0px;
+}
+
+.mat-button:last-of-type {
+  margin-right: 0px;
+}
+
+.mat-button__m-padding {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.mat-button--fade {
+  opacity: 0.55;
+}
+
