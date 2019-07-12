@@ -11,11 +11,11 @@ import { dotDelay, triggerState } from './progress-indicator.constant';
     transition('start => stop', [
       style({position: 'absolute'}),
       animate('{{timing}}', keyframes([
-      style({transform: 'translateX({{translateX0}}px)', offset: 0.0, animationTimingFunction: 'cubic-bezier(0.01,0.75,1,1)'}),
+      style({transform: 'translateX({{translateX0}}px)', offset: 0.05, animationTimingFunction: 'cubic-bezier(0.01,0.75,1,1)'}),
       style({transform: 'translateX({{translateX1}}px)', offset: 0.28, animationTimingFunction: 'linear'}),
       style({transform: 'translateX({{translateX2}}px)', offset: 0.66, animationTimingFunction: 'cubic-bezier(0,0,0.99,0.25)'}),
       style({transform: 'translateX({{translateX3}}px)', offset: 0.8, animationTimingFunction: 'linear'}),
-      style({transform: 'translateX({{translateX4}}px)', offset: 1.0, animationTimingFunction: 'linear'})
+      style({transform: 'translateX({{translateX4}}px)', opacity: 0, offset: 1.0, animationTimingFunction: 'linear'})
     ]))
       ], {params: {timing: '3s 1s'}})
     ]),
@@ -73,7 +73,7 @@ export class ProgressIndicatorComponent implements OnInit, AfterViewInit {
 
   getState(name: string, delay: string): {value, params} {
     const base = 400;
-    const translateX0 = -15;
+    const translateX0 = -5;
     const translateX1 = base * 0.4;
     const translateX2 = base * 0.58;
     const translateX3 = base + 5;

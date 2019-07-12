@@ -4,22 +4,30 @@
   $progress-indicator-dot-border-radius: 50%;
   $progress-indicator-dot-background-color: black; // {{brand-accent-1}}
 
-  height: $progress-indicator-dot-size;
-  position: relative;
-
   .progress-indicator {
-    position: absolute;
-    .progress-indicator__dot {
-      position: absolute;
-      z-index: $progress-indicator-dot-z-index;
-      width: $progress-indicator-dot-size;
-      height: $progress-indicator-dot-size;
-      background-color: $progress-indicator-dot-background-color;
-      border-radius: $progress-indicator-dot-border-radius;
 
-      -webkit-animation-name: loader;
-      -ms-animation-name: loader;
-      animation-name: loader;
+    overflow: hidden;
+    position: absolute;
+    left: 0px;
+    width: 100%;;
+
+    .progress-indicator__loader {
+      height: 3px;
+
+      .progress-indicator__loader__dot {
+        position: absolute;
+        left: -$progress-indicator-dot-size;
+        z-index: $progress-indicator-dot-z-index;
+        width: $progress-indicator-dot-size;
+        height: $progress-indicator-dot-size;
+        background-color: $progress-indicator-dot-background-color;
+        border-radius: $progress-indicator-dot-border-radius;
+
+        -webkit-animation-name: loader;
+        -ms-animation-name: loader;
+        animation-name: loader;
+      }
     }
+
   }
 }
