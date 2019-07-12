@@ -1,3 +1,11 @@
+// <copyright company="Softerra">
+//    Copyright (c) Softerra, Ltd. All rights reserved.
+// </copyright>
+//
+// <summary>
+//    The component draws a panel with running dots.
+// </summary>
+
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 import { dotDelay, triggerState } from './progress-indicator.constant';
@@ -15,9 +23,9 @@ import { dotDelay, triggerState } from './progress-indicator.constant';
       style({transform: 'translateX({{translateX1}}px)', offset: 0.28, animationTimingFunction: 'linear'}),
       style({transform: 'translateX({{translateX2}}px)', offset: 0.66, animationTimingFunction: 'cubic-bezier(0,0,0.99,0.25)'}),
       style({transform: 'translateX({{translateX3}}px)', offset: 0.8, animationTimingFunction: 'linear'}),
-      style({transform: 'translateX({{translateX4}}px)', opacity: 0, offset: 1.0, animationTimingFunction: 'linear'})
+      style({transform: 'translateX({{translateX4}}px)', offset: 1.0, animationTimingFunction: 'linear'})
     ]))
-      ], {params: {timing: '3s 1s'}})
+      ], {params: {timing: '3.3s 0.0s'}})
     ]),
   ],
   templateUrl: './progress-indicator.component.html',
@@ -25,14 +33,16 @@ import { dotDelay, triggerState } from './progress-indicator.constant';
 })
 export class ProgressIndicatorComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('self', {static: false}) self: ElementRef;
+  @Input() width?: number;
+  @Input() bottom?: boolean;
+
   state1: {value, params};
   state2: {value, params};
   state3: {value, params};
   state4: {value, params};
   state5: {value, params};
-
-  @ViewChild('self') self: ElementRef;
-  @Input('width?') width;
+  currentWidth: number;
 
   constructor() { }
 
@@ -46,7 +56,7 @@ export class ProgressIndicatorComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.self.nativeElement.parentElement.parentElement.clientWidth);
+    this.currentWidth = !!this.width ? this.width : this.self.nativeElement.parentElement.parentElement.clientWidth;
   }
 
   onDone($event: any): void {
@@ -72,12 +82,11 @@ export class ProgressIndicatorComponent implements OnInit, AfterViewInit {
   }
 
   getState(name: string, delay: string): {value, params} {
-    const base = 400;
     const translateX0 = -5;
-    const translateX1 = base * 0.4;
-    const translateX2 = base * 0.58;
-    const translateX3 = base + 5;
-    const translateX4 = base + 5;
-    return {value: name, params: {width: '200', translateX0, translateX1, translateX2, translateX3, translateX4, timing: delay}};
+    const translateX1 = Math.ceil(this.currentWidth * 0.4);
+    const translateX2 = Math.ceil(this.currentWidth * 0.58);
+    const translateX3 = this.currentWidth + 5;
+    const translateX4 = this.currentWidth + 5;
+    return {value: name, params: {translateX0, translateX1, translateX2, translateX3, translateX4, timing: delay}};
   }
 }

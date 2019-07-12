@@ -4,15 +4,20 @@
   $progress-indicator-dot-border-radius: 50%;
   $progress-indicator-dot-background-color: black; // {{brand-accent-1}}
 
+
   .progress-indicator {
 
     overflow: hidden;
     position: absolute;
     left: 0px;
-    width: 100%;;
+    width: 100%;
+
+    &.bottom{
+      bottom: 0px;
+    }
 
     .progress-indicator__loader {
-      height: 3px;
+      height: $progress-indicator-dot-size;
 
       .progress-indicator__loader__dot {
         position: absolute;
@@ -28,6 +33,5 @@
         animation-name: loader;
       }
     }
-
   }
 }

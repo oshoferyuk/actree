@@ -7,9 +7,10 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'buttons2';
-  ngOnInit(){
+  testw: number;
+  ngOnInit() {
   }
 
 }

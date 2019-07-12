@@ -1,4 +1,4 @@
-<div class="progress-indicator" #self>
+<div class="progress-indicator" #self [ngClass]="{'bottom':bottom}">
   <div class="progress-indicator__loader">
   <div [@piTrigger]="state1" (@piTrigger.done)="onDone($event)" class="progress-indicator__loader__dot"></div>
     <div [@piTrigger]="state2" (@piTrigger.done)="onDone($event)" class="progress-indicator__loader__dot"></div>

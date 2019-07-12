@@ -9,4 +9,4 @@ export const dotDelay = {
 export const triggerState = {
   START: 'start',
   STOP: 'stop'
-}
+};
