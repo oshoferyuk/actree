@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
+import { dotDelay, triggerState } from './progress-indicator.constant';
 
 @Component({
   selector: 'app-progress-indicator',
   animations: [
-    trigger(`signal`, [
-      state('state11', style({ })),
-      state('state12', style({  })),
-
-    transition('state11 => state12', [
+    trigger(`piTrigger`, [
+      state('start', style({})),
+      state('stop', style({})),
+    transition('start => stop', [
       style({position: 'absolute'}),
       animate('{{timing}}', keyframes([
       style({transform: 'translateX({{translateX0}}px)', offset: 0.0, animationTimingFunction: 'cubic-bezier(0.01,0.75,1,1)'}),
@@ -17,7 +17,7 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
       style({transform: 'translateX({{translateX3}}px)', offset: 0.8, animationTimingFunction: 'linear'}),
       style({transform: 'translateX({{translateX4}}px)', offset: 1.0, animationTimingFunction: 'linear'})
     ]))
-      ], {params: {width2: 50, timing: '3s 1s'}})
+      ], {params: {timing: '3s 1s'}})
     ]),
   ],
   templateUrl: './progress-indicator.component.html',
@@ -35,19 +35,19 @@ export class ProgressIndicatorComponent implements OnInit {
 
   ngOnInit() {
 
-    this.state1 = this.getParameters('state11', '3s 0s');
-    this.state2 = this.getParameters('state11', '3s 0.2s');
-    this.state3 = this.getParameters('state11', '3s 0.4s');
-    this.state4 = this.getParameters('state11', '3s 0.6s');
-    this.state5 = this.getParameters('state11', '3s 0.8s');
+    this.state1 = this.getParameters(triggerState.START, '3s 0s');
+    this.state2 = this.getParameters(triggerState.START, '3s 0.2s');
+    this.state3 = this.getParameters(triggerState.START, '3s 0.4s');
+    this.state4 = this.getParameters(triggerState.START, '3s 0.6s');
+    this.state5 = this.getParameters(triggerState.START, '3s 0.8s');
   }
 
   onDone($event: any){
-    this.state1 = this.state1.value == 'state11' ? this.getParameters('state12', '3s 0s') : this.getParameters('state11', '3s 0s');
-    this.state2 = this.state2.value == 'state11' ? this.getParameters('state12', '3s 0.2s') : this.getParameters('state11', '3s 0.2s');
-    this.state3 = this.state3.value == 'state11' ? this.getParameters('state12', '3s 0.4s') : this.getParameters('state11', '3s 0.4s');
-    this.state4 = this.state4.value == 'state11' ? this.getParameters('state12', '3s 0.6s') : this.getParameters('state11', '3s 0.6s');
-    this.state5 = this.state5.value == 'state11' ? this.getParameters('state12', '3s 0.8s') : this.getParameters('state11', '3s 0.8s');
+    this.state1 = this.state1.value === triggerState.START ? this.getParameters('stop', '3s 0s') : this.getParameters(triggerState.START, '3s 0s');
+    this.state2 = this.state2.value === triggerState.START ? this.getParameters('stop', '3s 0.2s') : this.getParameters(triggerState.START, '3s 0.2s');
+    this.state3 = this.state3.value === triggerState.START ? this.getParameters('stop', '3s 0.4s') : this.getParameters(triggerState.START, '3s 0.4s');
+    this.state4 = this.state4.value === triggerState.START ? this.getParameters('stop', '3s 0.6s') : this.getParameters(triggerState.START, '3s 0.6s');
+    this.state5 = this.state5.value === triggerState.START ? this.getParameters('stop', '3s 0.8s') : this.getParameters(triggerState.START, '3s 0.8s');
   }
 
   getParameters(name, delay){

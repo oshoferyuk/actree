@@ -1,34 +1,25 @@
 :host {
-  height: 3px;
+  $progress-indicator-dot-size: 3px;
+  $progress-indicator-dot-z-index: 2;
+  $progress-indicator-dot-border-radius: 50%;
+  $progress-indicator-dot-background-color: black; // {{brand-accent-1}}
+
+  height: $progress-indicator-dot-size;
   position: relative;
 
   .progress-indicator {
-
     position: absolute;
-    left: 0px;
-    width: 100%;
-  }
+    .progress-indicator__dot {
+      position: absolute;
+      z-index: $progress-indicator-dot-z-index;
+      width: $progress-indicator-dot-size;
+      height: $progress-indicator-dot-size;
+      background-color: $progress-indicator-dot-background-color;
+      border-radius: $progress-indicator-dot-border-radius;
 
-  .loader {
-    height: 3px;
-  }
-
-  .traffic-light {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background-color: blue;
-
-    animation-duration: 3.3s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-fill-mode: backwards;
-    animation-delay: 0.2s;
-
-    background: black;
-    border-radius: 50px;
-
-    -webkit-animation-name: loader;
-    -ms-animation-name: loader;
+      -webkit-animation-name: loader;
+      -ms-animation-name: loader;
+      animation-name: loader;
+    }
   }
 }
