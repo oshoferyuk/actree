@@ -1,4 +1,4 @@
-<div class="progress-indicator">
+<div class="progress-indicator" #self>
     <div [@piTrigger]="state1" (@piTrigger.done)="onDone($event)" class="progress-indicator__dot"></div>
     <div [@piTrigger]="state2" (@piTrigger.done)="onDone($event)" class="progress-indicator__dot"></div>
     <div [@piTrigger]="state3" (@piTrigger.done)="onDone($event)" class="progress-indicator__dot"></div>

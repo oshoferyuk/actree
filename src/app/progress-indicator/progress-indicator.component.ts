@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 import { dotDelay, triggerState } from './progress-indicator.constant';
 
@@ -23,39 +23,60 @@ import { dotDelay, triggerState } from './progress-indicator.constant';
   templateUrl: './progress-indicator.component.html',
   styleUrls: ['./progress-indicator.component.scss']
 })
-export class ProgressIndicatorComponent implements OnInit {
+export class ProgressIndicatorComponent implements OnInit, AfterViewInit {
 
-  state1;
-  state2;
-  state3;
-  state4;
-  state5;
+  state1: {value, params};
+  state2: {value, params};
+  state3: {value, params};
+  state4: {value, params};
+  state5: {value, params};
+
+  @ViewChild('self') self: ElementRef;
+  @Input('width?') width;
 
   constructor() { }
 
   ngOnInit() {
 
-    this.state1 = this.getParameters(triggerState.START, '3s 0s');
-    this.state2 = this.getParameters(triggerState.START, '3s 0.2s');
-    this.state3 = this.getParameters(triggerState.START, '3s 0.4s');
-    this.state4 = this.getParameters(triggerState.START, '3s 0.6s');
-    this.state5 = this.getParameters(triggerState.START, '3s 0.8s');
+    this.state1 = this.getState(triggerState.START, dotDelay.DOT1_DELAY);
+    this.state2 = this.getState(triggerState.START, dotDelay.DOT2_DELAY);
+    this.state3 = this.getState(triggerState.START, dotDelay.DOT3_DELAY);
+    this.state4 = this.getState(triggerState.START, dotDelay.DOT4_DELAY);
+    this.state5 = this.getState(triggerState.START, dotDelay.DOT5_DELAY);
   }
 
-  onDone($event: any){
-    this.state1 = this.state1.value === triggerState.START ? this.getParameters('stop', '3s 0s') : this.getParameters(triggerState.START, '3s 0s');
-    this.state2 = this.state2.value === triggerState.START ? this.getParameters('stop', '3s 0.2s') : this.getParameters(triggerState.START, '3s 0.2s');
-    this.state3 = this.state3.value === triggerState.START ? this.getParameters('stop', '3s 0.4s') : this.getParameters(triggerState.START, '3s 0.4s');
-    this.state4 = this.state4.value === triggerState.START ? this.getParameters('stop', '3s 0.6s') : this.getParameters(triggerState.START, '3s 0.6s');
-    this.state5 = this.state5.value === triggerState.START ? this.getParameters('stop', '3s 0.8s') : this.getParameters(triggerState.START, '3s 0.8s');
+  ngAfterViewInit() {
+    console.log(this.self.nativeElement.parentElement.parentElement.clientWidth);
   }
 
-  getParameters(name, delay){
+  onDone($event: any): void {
+    this.state1 = this.state1.value === triggerState.START
+      ? this.getState(triggerState.STOP, dotDelay.DOT1_DELAY)
+      : this.getState(triggerState.START, dotDelay.DOT1_DELAY);
+
+    this.state2 = this.state2.value === triggerState.START
+      ? this.getState(triggerState.STOP, dotDelay.DOT2_DELAY)
+      : this.getState(triggerState.START, dotDelay.DOT2_DELAY);
+
+    this.state3 = this.state3.value === triggerState.START
+      ? this.getState(triggerState.STOP, dotDelay.DOT3_DELAY)
+      : this.getState(triggerState.START, dotDelay.DOT3_DELAY);
+
+    this.state4 = this.state4.value === triggerState.START
+      ? this.getState(triggerState.STOP, dotDelay.DOT4_DELAY)
+      : this.getState(triggerState.START, dotDelay.DOT4_DELAY);
+
+    this.state5 = this.state5.value === triggerState.START
+      ? this.getState(triggerState.STOP, dotDelay.DOT5_DELAY)
+      : this.getState(triggerState.START, dotDelay.DOT5_DELAY);
+  }
+
+  getState(name: string, delay: string): {value, params} {
     const base = 400;
-    const translateX0 = -5;
+    const translateX0 = -15;
     const translateX1 = base * 0.4;
     const translateX2 = base * 0.58;
-    const translateX3 = base - 5;
+    const translateX3 = base + 5;
     const translateX4 = base + 5;
     return {value: name, params: {width: '200', translateX0, translateX1, translateX2, translateX3, translateX4, timing: delay}};
   }
