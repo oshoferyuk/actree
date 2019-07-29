@@ -31,7 +31,8 @@
               "src/styles.scss",
               "src/material/_variables.scss",
               "src/material/_button.scss",
-              "src/material/button.scss"
+              "src/material/button.scss",
+              "node_modules/angular2-draggable/css/resizable.min.css"
             ],
             "scripts": []
           },

@@ -1,0 +1,35 @@
+
+:host{
+
+  .mat-dialog-container{
+    border: 1px solid #4e81bd !important;
+  }
+
+  .confirm-dialog-content__header{
+    text-align: center;
+    font-weight: bold;
+    color: #4e81bd;
+  }
+
+  .confirm-dialog-content__content{
+    text-align: center;
+
+    p{
+      margin-top: 10px;
+    }
+  }
+
+  .confirm-dialog-content__actions{
+
+  }
+
+  .confirm-dialog-content__actions-center{
+    margin: 0px auto;
+
+    button{
+      background-color: #50ce93;
+      color: white;
+    }
+  }
+
+}

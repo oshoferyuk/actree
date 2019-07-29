@@ -6,7 +6,7 @@
 //    The component draws a panel with running dots.
 // </summary>
 
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostBinding, Input, OnInit, ViewChild} from '@angular/core';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 import { dotDelay, triggerState } from './progress-indicator.constant';
 
@@ -32,7 +32,7 @@ import { dotDelay, triggerState } from './progress-indicator.constant';
   styleUrls: ['./progress-indicator.component.scss']
 })
 export class ProgressIndicatorComponent implements OnInit, AfterViewInit {
-
+  @HostBinding('class') class = 'app-progress-indicator';
   @ViewChild('self', {static: false}) self: ElementRef;
   @Input() width?: number;
   @Input() bottom?: boolean;

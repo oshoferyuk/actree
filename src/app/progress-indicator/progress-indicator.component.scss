@@ -2,36 +2,35 @@
   $progress-indicator-dot-size: 3px;
   $progress-indicator-dot-z-index: 2;
   $progress-indicator-dot-border-radius: 50%;
-  $progress-indicator-dot-background-color: black; // {{brand-accent-1}}
+  $progress-indicator-dot-background-color: black; // {{brand-accent-1}} move as variable to theme file when theming is ready
 
 
   .progress-indicator {
-
     overflow: hidden;
     position: absolute;
     left: 0px;
     width: 100%;
+  }
 
-    &.bottom{
-      bottom: 0px;
-    }
+  .progress-indicator--bottom{
+    bottom: 0px;
+  }
 
-    .progress-indicator__loader {
-      height: $progress-indicator-dot-size;
+  .progress-indicator__loader {
+    height: $progress-indicator-dot-size;
+  }
 
-      .progress-indicator__loader__dot {
-        position: absolute;
-        left: -$progress-indicator-dot-size;
-        z-index: $progress-indicator-dot-z-index;
-        width: $progress-indicator-dot-size;
-        height: $progress-indicator-dot-size;
-        background-color: $progress-indicator-dot-background-color;
-        border-radius: $progress-indicator-dot-border-radius;
+  .progress-indicator__loader-dot {
+    position: absolute;
+    left: -$progress-indicator-dot-size;
+    z-index: $progress-indicator-dot-z-index;
+    width: $progress-indicator-dot-size;
+    height: $progress-indicator-dot-size;
+    background-color: $progress-indicator-dot-background-color;
+    border-radius: $progress-indicator-dot-border-radius;
 
-        -webkit-animation-name: loader;
-        -ms-animation-name: loader;
-        animation-name: loader;
-      }
-    }
+    -webkit-animation-name: loader;
+    -ms-animation-name: loader;
+    animation-name: loader;
   }
 }

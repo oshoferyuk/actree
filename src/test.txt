@@ -1,0 +1,512 @@
+[[PageOutline]]
+
+= !TypeScript Coding Guidelines =
+
+== !TypeScript Files ==
+!TypeScript programs should be stored in and delivered as .ts files.
+!TypeScript code should not be embedded in HTML files unless the code is specific to a single session. Code in HTML adds significantly to pageweight with no opportunity for mitigation by caching and compression.
+'''<script src=filename.ts>''' tags should be placed as late in the body as possible. This reduces the effects of delays imposed by script loading on other page components. There is no need to use the language or type attributes. It is the server, not the script tag, that determines the MIME type.
+
+=== Define 1 Component Per File ===
+
+=== Use IIFE (Immediately Invoked Function Expression) ===
+An IIFE removes variables from the global scope. This helps prevent variables and function declarations from living longer than expected in the global scope, which also helps avoid variable collisions.
+When your code is minified and bundled into a single file for deployment to a production server, you could have collisions of variables and many global variables. An IIFE protects you against both of these by providing variable scope for each file.
+{{{
+(function (angular)
+{
+    angular.module('app').factory('storage', createService);
+
+    function createService()
+    {
+       // Implementation here
+    }
+})(angular);
+}}}
+
+== Indentation ==
+The unit of indentation is four spaces. Use of tabs should be avoided because (as of this writing in the 21st Century) there still is not a standard for the placement of tabstops. The use of spaces can produce a larger filesize, but the size is not significant over local networks, and the difference is eliminated by minification.
+
+== Line Length ==
+Avoid lines longer than '''100''' characters. When a statement will not fit on a single line, it may be necessary to break it. Place the break after an operator, ideally after a comma. A break after an operator decreases the likelihood that a copy-paste error will be masked by semicolon insertion. The next line should be indented '''4''' spaces.
+
+== Comments ==
+Be generous with comments. It is useful to leave information that will be read at a later time by people (possibly yourself) who will need to understand what you have done. The comments should be well-written and clear, just like the code they are annotating. An occasional nugget of humor might be appreciated. Frustrations and resentments will not.
+It is important that comments be kept up-to-date. Erroneous comments can make programs even harder to read and understand.
+Make comments meaningful. Focus on what is not immediately visible. Don't waste the reader's time with stuff like
+{{{
+    i = 0; // Set i to zero.
+}}}
+Generally use line comments. Save block comments for formal documentation and for commenting out.
+
+=== Use jsDoc ===
+Use jsDoc format for component or function description. It allows !TypeScript development tools to provide better intellisense.
+{{{
+/**
+ * @name logError
+ * @desc Logs errors
+ * @param {String} msg Message to log
+ * @returns {String}
+ */
+function logError(msg)
+{
+    var loggedMsg = 'Error: ' + msg;
+    $log.error(loggedMsg);
+    return loggedMsg;
+};
+}}}
+== Variable Declarations ==
+All variables should be declared before used. When you fail to specify '''var''', the variable gets placed in the global context, potentially clobbering existing values. Also, if there's no declaration, it's hard to tell in what scope a variable lives (e.g., it could be in the Document or Window just as easily as in the local scope). So always declare with '''var'''.
+It is preferred that each variable be given its own line and comment. They should be listed in alphabetical order.
+{{{
+    var currentEntry; // currently selected table entry
+    var level;        // indentation level
+    var size;         // size of table
+}}}
+
+== Function Declarations ==
+=== Avoid Anonymous Function ===
+Use named functions instead of defining anonymous functions. This produces more readable code, is much easier to debug, and reduces the amount of nested callback code. Anonymous functions can be used for passing event handlers and callback functions.
+
+=== Function Declaration Code Style ===
+There should be no space between the name of a function and the ( (left parenthesis) of its parameter list. There should be a line break between the ) (right parenthesis) and the { (left curly brace) that begins the statement body. The body itself is indented four spaces. The } (right curly brace) is aligned with the line containing the beginning of the declaration of the function.
+{{{
+    function outer(c, d)
+    {
+        var e = c * d;
+
+        function inner(a, b)
+        {
+            return (e * a) + b;
+        }
+
+        return inner(0, 1);
+    }
+}}}
+
+Use of global functions should be minimized.
+
+== Names ==
+Names should be formed from the 26 upper and lower case letters (A .. Z, a .. z), the 10 digits (0 .. 9), and _ (underbar). Avoid use of international characters because they may not read well or be understood everywhere.
+Do not use _ (underbar) as the first character of a name. It is sometimes used to indicate privacy, but it does not actually provide privacy.
+Most variables and functions should start with a lower case letter.
+Constructor functions which must be used with the new prefix should start with a capital letter. !TypeScript issues neither a compile-time warning nor a run-time warning if a required new is omitted. Bad things can happen if new is not used, so the capitalization convention is the only defence we have.
+In general, use '''functionNamesLikeThis''', '''variableNamesLikeThis''', '''!ClassNamesLikeThis''', '''CONSTANT_VALUES_LIKE_THIS'''.
+
+== Statements ==
+=== Simple Statements ===
+Each line should contain at most one statement. Put a ; (semicolon) at the end of every simple statement. Note that an assignment statement which is assigning a function literal or object literal is still an assignment statement and must end with a semicolon.
+=== Compound Statements ===
+Compound statements are statements that contain lists of statements enclosed in { } (curly braces).
+ * The enclosed statements should be indented four more spaces.
+ * The { (left curly brace) should be at the end of the line that begins the compound statement.
+ * The } (right curly brace) should begin a line and be indented to align with the beginning of the line containing the matching { (left curly brace).
+ * Braces should be used around all statements, even single statements, when they are part of a control structure, such as an if or for statement. This makes it easier to add statements without accidentally introducing bugs.
+==== return Statement ====
+A '''return''' statement with a value should not use ( ) (parentheses) around the value. The return value expression must start on the same line as the return keyword in order to avoid semicolon insertion.
+==== if Statement ====
+The '''if''' class of statements should have the following form:
+{{{
+    if (condition)
+    {
+        statements
+    }
+    else if (condition)
+    {
+        statements
+    }
+    else
+    {
+        statements
+    }
+}}}
+==== for Statement ====
+A '''for''' class of statements should have the following form:
+{{{
+    for (initialization; condition; update)
+    {
+        statements
+    }
+
+    for (variable in object)
+    {
+        if (filter)
+        {
+            statements
+        }
+    }
+}}}
+The first form should be used with arrays and with loops of a predeterminable number of iterations.
+The second form should be used with objects. Be aware that members that are added to the prototype of the object will be included in the enumeration. It is wise to program defensively by using the hasOwnProperty method to distinguish the true members of the object:
+{{{
+    for (variable in object)
+    {
+        if (object.hasOwnProperty(variable))
+        {
+            statements
+        }
+    }
+}}}
+==== while Statement ====
+A '''while''' statement should have the following form:
+{{{
+    while (condition)
+    {
+        statements
+    }
+}}}
+==== do Statement ====
+A '''do''' statement should have the following form:
+{{{
+    do
+    {
+        statements
+    }
+    while (condition);
+}}}
+Unlike the other compound statements, the do statement always ends with a ; (semicolon).
+==== switch Statement ====
+A '''switch''' statement should have the following form:
+{{{
+    switch (expression)
+    {
+        case expression:
+            statements
+        default:
+            statements
+    }
+}}}
+Each group of statements (except the '''default''') should end with '''break''', '''return''', or '''throw'''
+==== try Statement ====
+The '''try''' class of statements should have the following form:
+{{{
+    try
+    {
+        statements
+    }
+    catch (variable)
+    {
+        statements
+    }
+    finally
+    {
+        statements
+    }
+}}}
+
+== Whitespace ==
+Blank lines improve readability by setting off sections of code that are logically related.
+Blank spaces should be used in the following circumstances:
+ * A keyword followed by ( (left parenthesis) should be separated by a space.
+   {{{
+     while (true)
+   }}}
+ * A blank space should not be used between a function value and its ( (left parenthesis). This helps to distinguish between keywords and function invocations.
+ * All binary operators except . (period) and ( (left parenthesis) and [ (left bracket) should be separated from their operands by a space.
+ * No space should separate a unary operator and its operand except when the operator is a word such as typeof.
+ * Each ; (semicolon) in the control part of a for statement should be followed with a space.
+ * Whitespace should follow every , (comma).
+
+== Strings ==
+Prefer ' over "
+For consistency single-quotes (') are preferred to double-quotes ("). This is helpful when creating strings that include HTML:
+{{{
+   var msg = 'This is some HTML';
+}}}
+
+== Bonus Suggestions ==
+=== {} and [] ===
+Use {} instead of new Object(). Use [] instead of new Array().
+Use arrays when the member names would be sequential integers. Use objects when the member names are arbitrary strings or names.
+=== , (comma) Operator ===
+Avoid the use of the comma operator except for very disciplined use in the control part of for statements. (This does not apply to the comma separator, which is used in object literals, array literals, var statements, and parameter lists.)
+=== Block Scope ===
+In TypeScript blocks do not have scope. Only functions have scope. Do not use blocks except as required by the compound statements.
+=== Assignment Expressions ===
+Avoid doing assignments in the condition part of '''if''' and '''while''' statements.
+Is
+{{{
+    if (a = b)
+}}}
+a correct statement? Or was
+{{{
+    if (a == b)
+}}}
+intended? Avoid constructs that cannot easily be determined to be correct.
+=== === and !== Operators. ===
+It is almost always better to use the === and !== operators. The == and != operators do type coercion. In particular, do not use == to compare against falsy values.
+=== eval is Evil ===
+The '''eval''' function is the most misused feature of !TypeScript. Avoid it.
+'''eval''' has aliases. Do not use the '''Function''' constructor. Do not pass strings to '''setTimeout''' or '''setInterval'''.
+=== Do not modify prototypes of builtin objects ===
+Modifying builtins like '''Object.prototype''' and '''Array.prototype''' are strictly forbidden. Modifying other builtins like '''Function.prototype''' is less dangerous but still leads to hard to debug issues in production and should be avoided.
+=== Do not use delete keyword ===
+Use
+{{{
+   this.foo = null;
+}}}
+instead of
+{{{
+   delete this.foo;
+}}}
+In modern !TypeScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj).
+
+= AngularJS Style Guide =
+== File Names Rules ==
+Use the following file names:
+{{{
+// Module definition:
+$module.ts
+
+// Controllers:
+controllerName.controller.ts         // definition
+controllerName.controller.spec.ts    // unit tests
+
+// Services:
+serviceName.service.ts               // definition
+serviceName.service.spec.ts          // unit tests
+
+// Directive
+directiveName.directive.ts           // definition
+directiveName.directive.spec.ts      // unit tests
+
+// Class
+className.class.ts                   // definition
+className.class.spec.ts              // unit tests
+
+// Value
+valueName.value.ts                   // definition
+
+// Constant
+constantName.constant.ts             // definition
+
+// Class
+className.class.ts                   // definition
+className.class.spec.ts              // unit tests
+
+}}}
+
+== AngularJS Module Definition ==
+Place one module per directory. Place module definition in the file called $module.ts, in other files to get the instance of the module use module getter syntax. Use function with name '''configure''' for the module's configuration block and function with name '''run''' for the module's run block:
+{{{
+// $module.ts
+(function (angular)
+{
+    angular.module('mymodule', ['module.dependency']).config(configure).run(run);
+
+    function configure()
+    {
+    }
+
+    function run()
+    {
+    }
+})(angular);
+
+// serviceA.ts
+(function (angular)
+{
+    angular.module('mymodule').service('serviceA', ServiceA);
+
+    function ServiceA()
+    {
+    }
+
+})(angular);
+
+}}}
+
+== Services ==
+ * Services should have a single responsibility, that is encapsulated by its context. Once a service begins to exceed that singular purpose, a new service should be created.
+ * Expose the callable members of the service (it's interface) at the top.
+
+{{{
+// Create via service
+(function (angular)
+{
+    angular.module('mymodule').service('serviceA', ServiceA);
+
+    ServiceA.$inject = ['serviceB'];
+    function ServiceA(serviceB)
+    {
+        // public methods
+        this.method1 = method1;
+        this.method2 = method2;
+
+        // methods definition
+        function method1()
+        {
+        }
+
+        function method2()
+        {
+        }
+    }
+
+})(angular);
+
+// Create via factory
+(function (angular)
+{
+    angular.module('mymodule').factory('serviceA', createService);
+
+    createService.$inject = ['serviceB'];
+    function createService(serviceB)
+    {
+        return {
+            'method1':  method1,
+            'method2': method2
+        }
+
+        function method1()
+        {
+        }
+
+        function method2()
+        {
+        }
+    }
+})(angular);
+
+// Create via provider
+(function (angular)
+{
+    angular.module('mymodule').provider('serviceA', ServiceAProvider);
+
+    function ServiceAProvider()
+    {
+        // Provider interface
+        this.configure = configure;
+        this.$get = $get;
+
+        // Define methods
+        function configure()
+        {
+        }
+
+        $get.$inject = ['serviceB']
+        function $get(serviceB)
+        {
+            // create service here
+        }
+    }
+
+})(angular);
+
+}}}
+
+== Controllers ==
+Defer logic in a controller by delegating to services and factories. Controllers have to be as simple as possible.  Because:
+ * Logic may be reused by multiple controllers when placed within a service and exposed via a function.
+ * Logic in a service can more easily be isolated in a unit test, while the calling logic in the controller can be easily mocked.
+ * Removes dependencies and hides implementations details from the controller.
+
+
+{{{
+(function (angular)
+{
+    angular.module('mymodule').controller('MyController', MyController);
+
+    MyController.$inject = ['service1'];
+    function MyController(service1)
+    {
+        // Controller initialization
+    }
+})(angular);
+
+}}}
+
+== Directives ==
+=== Directive Naming ===
+Use prefix '''adm''' for directive names.
+=== Restrict to Elements and Attributes ===
+When creating a directive that makes sense as a standalone element, allow restrict E (custom element) and optionally restrict A (custom attribute). Generally, if it could be its own control, E is appropriate. General guideline is allow EA but lean towards implementing as an element when its standalone and as an attribute when it enhances its existing DOM element.
+{{{
+(function (angular)
+{
+    angular.module('mymodule')
+        .directive('admMyDirective', createDirective)
+        .controller('AdmMyDirectiveController', AdmMyDirectiveController);
+
+    createDirective.$inject = ['service1'];
+    function createDirective(service1)
+    {
+        return {
+            scope: {},
+            restrict: 'A',
+            controller: 'AdmMyDirectiveController'
+            link: function(scope, element, attrs, ctrl)
+            {
+            }
+        }
+    }
+
+    AdmMyDirectiveController.$inject = ['service2'];
+    function AdmMyDirectiveController(service2)
+    {
+        // Controller initialization
+    }
+})(angular);
+
+
+}}}
+
+== Classes ==
+ * Use prefix '!__' to identify private members.
+ * Use prefix '_' to identify protected members
+ * It is better to define methods in the prototype as it reduces memory usage.
+ * To define class hierarchy use the Class library.
+
+To define a class use the following code snippet:
+{{{
+(function (angular)
+{
+    angular.module('mymodule').factory('Person', createClass)
+
+    createClass.$inject = ['service1'];
+    function createClass(service1)
+    {
+        return Person;
+    }
+
+    function Person(age)
+    {
+        // use the prefix '__' to define private members
+        this.__age = age;
+    }
+
+    // Define methods via prototype
+    Person.prototype.getAge = function()
+    {
+        return this.__age;
+    }
+
+})(angular);
+
+}}}
+
+
+
+== Manual Dependency Injection ==
+Avoid using the shortcut syntax of declaring dependencies without using a minification-safe approach.
+Use $inject to manually identify your dependencies for AngularJS components.
+{{{
+/* avoid */
+angular
+  .module('app')
+  .controller('Dashboard',
+    ['$location', '$routeParams', 'common', 'dataservice', Dashboard]);
+function Dashboard($location, $routeParams, common, dataservice)
+{
+}
+
+/* recommended */
+angular
+  .module('app')
+  .controller('Dashboard', Dashboard);
+
+Dashboard.$inject = ['$location', '$routeParams', 'common', 'dataservice'];
+function Dashboard($location, $routeParams, common, dataservice)
+{
+}
+}}}

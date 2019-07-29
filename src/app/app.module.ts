@@ -5,20 +5,29 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatIconModule} from '@angular/material';
-import { ProgressIndicatorComponent } from './progress-indicator/progress-indicator.component';
+import {SharedModule} from "./shared/shared.module";
+import {AngularSplitModule} from "angular-split";
+import {ResizableComponent} from "./resizable/resizable.component";
+import {AngularDraggableModule} from "angular2-draggable";
+import {MatListModule} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProgressIndicatorComponent
+    ResizableComponent
   ],
   imports: [
     BrowserModule,
+    SharedModule,
+    AngularDraggableModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatListModule,
     MatIconModule,
+    MatTabsModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

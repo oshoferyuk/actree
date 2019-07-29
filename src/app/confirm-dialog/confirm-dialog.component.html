@@ -1,0 +1,13 @@
+<h1 class="confirm-dialog-content__header"mat-dialog-title>{{data.header}}</h1>
+
+<mat-dialog-content class="confirm-dialog-content__content">
+  test
+  <p>Do you wish to proceed?</p>
+</mat-dialog-content>
+<mat-dialog-actions class="confirm-dialog-content__actions">
+  <div class="confirm-dialog-content__actions-center">
+    <button mat-button [mat-dialog-close]="true">Yes</button>
+    <button mat-button mat-dialog-close>No</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  </div>
+</mat-dialog-actions>
