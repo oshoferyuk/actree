@@ -1,0 +1,57 @@
+// <copyright company="Softerra">
+//    Copyright (c) Softerra, Ltd. All rights reserved.
+// </copyright>
+//
+// <summary>
+//    Contains common styles for editor container.
+// </summary>
+
+$input-label-default-offset: 20px;
+$input-label-default-scale: 1.0;
+$input-error-height: 24px;
+
+$input-label-float-scale: 0.75;
+$input-label-float-offset: 3px;
+$input-error-line-height: 15px;
+$error-padding-top: round(($input-error-height - $input-error-line-height) / 2);
+
+$invalid-messages-long-error-height: 28px;
+$layout-breakpoint-sm: 300px; //TODO: hardcoded
+
+@mixin editor-container-label-width-lg($width) {
+  @media (min-width: $layout-breakpoint-sm) {
+    & > label {
+      width: $width;
+      flex-shrink: 0;
+    }
+  }
+}
+
+@mixin editor-container-label-width($width) {
+  & > label {
+    width: $width;
+    flex-shrink: 0;
+  }
+}
+
+
+@mixin editor-container-layout($layoutSelector) {
+  #{$layoutSelector} {
+    @content;
+  }
+
+  @media (min-width: $layout-breakpoint-sm) {
+    #{$layoutSelector}-lg {
+      @content;
+    }
+  }
+
+  @media (max-width: $layout-breakpoint-sm - 1) {
+    #{$layoutSelector}-sm {
+      @content;
+    }
+  }
+}
+
+
+

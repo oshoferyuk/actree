@@ -1,0 +1,30 @@
+// <copyright company="Softerra">
+//    Copyright (c) Softerra, Ltd. All rights reserved.
+// </copyright>
+//
+// <summary>
+//    Contains theme styles for editor container.
+// </summary>
+
+.editor-container {
+  &.is-focused:not(.is-readonly) > label {
+    color: blue !important;
+  }
+
+  &.is-invalid {
+    ng-message, [ng-message] {
+      color: red !important;
+    }
+  }
+
+  &.is-disabled > label {
+    color: gray !important;
+  }
+
+  &.highlight{
+    background-color: transparent;
+    .editor-container__content{
+      background-color: white;
+    }
+  }
+}

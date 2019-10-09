@@ -12,10 +12,21 @@ import {AngularDraggableModule} from "angular2-draggable";
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
 
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './counter.reducer';
+import { MyCounterComponent } from './my-counter/my-counter.component';
+import { EditorContainerComponent } from './editor-container/editor-container/editor-container.component';
+import { EditorContainer2Directive } from './editor-container2/editor-container2.directive';
+import { UnderlinedInputComponent } from './underlined-input/underlined-input.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    ResizableComponent
+    ResizableComponent,
+    MyCounterComponent,
+    EditorContainerComponent,
+    EditorContainer2Directive,
+    UnderlinedInputComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +39,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatTabsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({ count: counterReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

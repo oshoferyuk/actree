@@ -1,0 +1,208 @@
+// <copyright company="Softerra">
+//    Copyright (c) Softerra, Ltd. All rights reserved.
+// </copyright>
+//
+// <summary>
+//    Contains typography elements
+// </summary>
+
+// Define variables
+$title1-font-size: $font-size-huge;
+$title1-font-size-sm: $font-size-xxxl;
+$title2-font-size: $font-size-xxxl;
+$title3-font-size: $font-size-xxl;
+$title4-font-size: $font-size-xl;
+$title5-font-size: $font-size-lg;
+$title6-font-size: $font-size-base;
+
+// Font faces
+@font-face {
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Segoe UI Light');
+}
+@font-face {
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Segoe UI');
+}
+@font-face {
+  font-family: 'Segoe UI';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Segoe UI Italic');
+}
+
+@font-face {
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Segoe UI Semibold');
+}
+@font-face {
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Segoe UI Bold');
+}
+
+// Util classes
+.u-center {
+  text-align: center;
+}
+
+.u-justified {
+  text-align: justify;
+}
+
+.u-left {
+  text-align: left;
+}
+
+.u-right {
+  text-align: right;
+}
+
+.u-uppercase {
+  text-transform: uppercase;
+}
+
+.u-lowercase {
+  text-transform: lowercase;
+}
+
+.u-underline {
+  text-decoration: underline;
+}
+.u-line-through {
+  text-decoration: line-through;
+}
+
+.u-nowrap {
+  white-space: nowrap;
+}
+
+.u-text-break {
+  word-wrap: break-word;
+}
+
+.u-overflow-hidden {
+  overflow: hidden;
+}
+
+.u-valign-bottom {
+  vertical-align: bottom;
+}
+.u-valign-middle {
+  vertical-align: middle;
+}
+.u-valign-top {
+  vertical-align: top;
+}
+
+.u-cursor-pointer {
+  cursor: pointer;
+}
+
+// Font sizes (from the smallest to the biggest)
+.u-size-xxs {
+  font-size: $font-size-xxs;
+}
+
+.u-size-xs {
+  font-size: $font-size-xs;
+}
+
+.u-size-sm {
+  font-size: $font-size-sm;
+}
+
+.u-size-base {
+  font-size: $font-size-base;
+}
+
+.u-size-lg {
+  font-size: $font-size-lg;
+}
+
+.u-size-xl {
+  font-size: $font-size-xl;
+}
+
+.u-size-xxl {
+  font-size: $font-size-xxl;
+}
+
+.u-size-xxxl {
+  font-size: $font-size-xxxl;
+}
+
+// Font weight
+.u-weight-light {
+  font-weight: 300;
+}
+
+.u-weight-normal {
+  font-weight: 400;
+}
+
+.u-weight-semibold {
+  font-weight: 500;
+}
+
+.u-weight-bold {
+  font-weight: 700;
+}
+
+.u-italic {
+  font-style: italic;
+}
+
+// Titles
+.u-title-1 {
+  font-size: $title1-font-size;
+  font-weight: 400;
+
+  @media (max-width: $layout-breakpoint-sm - 1 ) {
+    font-size: $title1-font-size-sm;
+  }
+}
+
+.u-title-2 {
+  font-size: $title2-font-size;
+  font-weight: 400;
+}
+
+.u-title-2--accend {
+  font-weight: 300;
+}
+
+.u-title-3 {
+  font-size: $title3-font-size;
+  font-weight: 400;
+}
+
+.u-title-4 {
+  font-size: $title4-font-size;
+  font-weight: 400;
+}
+
+.u-title-5 {
+  font-size: $title5-font-size;
+  font-weight: 400;
+}
+
+.u-title-6 {
+  font-size: $title6-font-size;
+  font-weight: 500;
+}
+
+.u-invalid-underlined {
+  background-position: bottom;
+  background-repeat: repeat-x;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  display: inline-block;
+}
