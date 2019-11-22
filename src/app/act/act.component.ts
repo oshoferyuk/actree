@@ -10,6 +10,7 @@ import {ACT_ITEMS, CONDITION_POSITION} from "../ActItem.constant";
 export class ActComponent implements OnInit, AfterViewInit {
 
   @ViewChild('tree', { static: false }) tree;
+  @ViewChild('treeEl', { static: false }) treeEl: ElementRef;
 
   nodes = [
     {
@@ -44,12 +45,45 @@ export class ActComponent implements OnInit, AfterViewInit {
             {
               id: 6399999,
               type: ACT_ITEMS.CONDITION,
-              conditionPosition: CONDITION_POSITION.THEONE,
+              conditionPosition: CONDITION_POSITION.START,
               name: [{pre:'IF', condition: 'inner condition l3', post: ''}],
               children: [
                 { id: 631, name: 'action', type: ACT_ITEMS.ACTION },
                 { id: 632, name: 'action', type: ACT_ITEMS.ACTION },
                 { id: 633, name: 'action', type: ACT_ITEMS.ACTION }
+              ]
+            },
+            {
+              id: 6399992,
+              type: ACT_ITEMS.CONDITION,
+              conditionPosition: CONDITION_POSITION.MIDDLE,
+              name: [{pre:'IF', condition: 'inner condition l3(2)', post: ''}],
+              children: [
+                { id: 531, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 532, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 533, name: 'action', type: ACT_ITEMS.ACTION }
+              ]
+            },
+            {
+              id: 6399992,
+              type: ACT_ITEMS.CONDITION,
+              conditionPosition: CONDITION_POSITION.MIDDLE,
+              name: [{pre:'IF', condition: 'inner condition l3(2)', post: ''}],
+              children: [
+                { id: 531, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 532, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 533, name: 'action', type: ACT_ITEMS.ACTION }
+              ]
+            },
+            {
+              id: 6399992,
+              type: ACT_ITEMS.CONDITION,
+              conditionPosition: CONDITION_POSITION.END,
+              name: [{pre:'IF', condition: 'inner condition l3(2)', post: ''}],
+              children: [
+                { id: 531, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 532, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 533, name: 'action', type: ACT_ITEMS.ACTION }
               ]
             }
           ]
@@ -87,6 +121,9 @@ export class ActComponent implements OnInit, AfterViewInit {
 
 
   nodeLevels: any[] = []; //node elements
+  nodeLevelsAllSiblings: any[] = []; //node elements
+  nodeLevelsGroupSiblings: any[] = []; //node elements
+  levelClassName: string;
 
   constructor(public renderer: Renderer2, public el: ElementRef) {
 
@@ -117,6 +154,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
   onClick(event: any){
     this.selectClean();
+    this._cleanSiblingActiveGroup();
     this.nodeLevels = [];
 
     if(event.target.nodeName == "TREE-VIEWPORT"){
@@ -136,14 +174,14 @@ export class ActComponent implements OnInit, AfterViewInit {
 
       parent = this.renderer.parentNode(parent);
     }
+
     this.selectFirst();
+    this.selectActiveGroup();
   }
 
 
   testSelection(event){
       console.log(this.nodeLevels);
-    ///this.renderer.addClass(this.nodeLevels[0], 'active');
-
   }
 
 
@@ -203,35 +241,93 @@ export class ActComponent implements OnInit, AfterViewInit {
     }
   }
 
+  selectGetLevelClassName(){
+    if(this.nodeLevels.length < 1){
+      console.log('warning [act] invoke selectActiveGroup for empty set');
+      return;
+    }
 
+    const selectedNode = this.nodeLevels[0];
+    const selectedNodeClassNames = selectedNode.className.split(' ');
+    return selectedNodeClassNames[0];
+  }
+
+  selectGetAllSiblings(){
+    this.levelClassName = this.selectGetLevelClassName();
+    this.nodeLevelsAllSiblings = [];
+    if(this.nodeLevels.length > 1){
+      const parentLevel = this.nodeLevels[1];
+      this.nodeLevelsAllSiblings = parentLevel.querySelectorAll('.' + this.levelClassName + ':not(.tree-node-leaf)')
+    }else {
+      this.nodeLevelsAllSiblings = this.el.nativeElement.querySelectorAll('.' + this.levelClassName);
+    }
+    console.log(this.nodeLevelsAllSiblings);
+  }
+
+  selectGetGroupSiblings(){
+
+    this._cleanSiblingActiveGroup();
+    const activatedSiblingsPosition = this._getActiveGroupBoundaries();
+    console.log('7777777777777777777');
+    console.log('start ' + activatedSiblingsPosition.start);
+    console.log('end ' + activatedSiblingsPosition.end);
+    if(activatedSiblingsPosition.end === -1 || activatedSiblingsPosition.start === -1){
+      console.log('warning [act] sibling positions are not found');
+    }
+    console.log('all siblings');
+    console.log(this.nodeLevelsAllSiblings);
+
+    this._cleanSiblingActiveGroup();
+    this.nodeLevelsGroupSiblings = [];
+    this.nodeLevelsAllSiblings.forEach((el,i) => {
+      if(activatedSiblingsPosition.start <= i && i <= activatedSiblingsPosition.end){
+        this.nodeLevelsGroupSiblings.push(el);
+        this.renderer.addClass(el, 'active-group');
+      }
+    });
+    console.log('group siblings');
+    console.log(this.nodeLevelsGroupSiblings);
+  }
+
+  selectActiveGroup(){
+
+    this.selectGetAllSiblings();
+    this.selectGetGroupSiblings();
 }
 
+private _cleanSiblingActiveGroup(){
+  this.nodeLevelsAllSiblings.forEach(el => {
+    this.renderer.removeClass(el, 'active-group');
+  });
+}
 
+private _getActiveGroupBoundaries(){
+  let start = -1;
+  let end = -1;
+  let found = false;
+  this.nodeLevelsAllSiblings.forEach((el, i) => {
+      if(el.className.includes('theone') && el.className.includes('active') ){
+        start = i;
+        end = i;
+        return;
+      }
 
+    if(el.className.includes('start')){
+      start = i;
+    }
 
+    if(el.className.includes('active')){
+      found = true;
+    }
 
+    if(el.className.includes('end')){
+      if(found){
+        end = i;
+        return;
+      }
+    }
+  });
+  return {start, end};
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//const levelNodes = this.el.nativeElement.querySelector('[class^="tree-node-level"]');
-//console.log(this.el);
-// const levelNodes = this.el.nativeElement.querySelectorAll('tree-node'); // TODO ashof improve, not all, but levels if needed
-//console.log('------------ levels');
-//levelNodes.forEach((levelNode) => {
-//console.log(levelNode);
-// this.renderer.removeClass(levelNode, 'active');
-//})
+}
