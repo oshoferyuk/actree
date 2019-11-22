@@ -1,36 +1,53 @@
-:host {
-  $progress-indicator-dot-size: 3px;
-  $progress-indicator-dot-z-index: 2;
-  $progress-indicator-dot-border-radius: 50%;
-  $progress-indicator-dot-background-color: black; // {{brand-accent-1}} move as variable to theme file when theming is ready
-
-
-  .progress-indicator {
-    overflow: hidden;
-    position: absolute;
-    left: 0px;
-    width: 100%;
-  }
-
-  .progress-indicator--bottom{
-    bottom: 0px;
-  }
-
-  .progress-indicator__loader {
-    height: $progress-indicator-dot-size;
-  }
-
-  .progress-indicator__loader-dot {
-    position: absolute;
-    left: -$progress-indicator-dot-size;
-    z-index: $progress-indicator-dot-z-index;
-    width: $progress-indicator-dot-size;
-    height: $progress-indicator-dot-size;
-    background-color: $progress-indicator-dot-background-color;
-    border-radius: $progress-indicator-dot-border-radius;
-
-    -webkit-animation-name: loader;
-    -ms-animation-name: loader;
-    animation-name: loader;
+@mixin progressIndicatorDebounce($count: 5, $delay: 0.2s, $selector: '.progress-indicator__dot')
+{
+  $_selector: $selector;
+  @for $i from 1 through $count {
+    #{$_selector} {
+      animation-delay: $delay * $i;
+    }
+    $_selector: #{$_selector} + #{$selector};
   }
 }
+
+@keyframes indeterminate-progress-indicator {
+  0%       { left: 0px; animation-timing-function: cubic-bezier(.01, .75, 1, 1); }
+  28%      { left: 40%; }
+  66%      { left: 58%; animation-timing-function: cubic-bezier(0, 0, .99, .25); }
+  80%      { left: 105%; }
+  100%     { left: 105%; }
+  //100%     { display: none }
+}
+
+:host
+{
+  position: relative;
+  display: block;
+  font-size: 0;
+  line-height: 0;
+  width: 100%;
+  height: 0;
+}
+
+.progress-indicator
+{
+  position: absolute;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  height: 3px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.progress-indicator__dot
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  background: #0288d1;
+  animation: indeterminate-progress-indicator 3.3s linear infinite backwards;
+}
+
+@include progressIndicatorDebounce();

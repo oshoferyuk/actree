@@ -1,9 +1,7 @@
-<div class="progress-indicator" #self [ngClass]="{'progress-indicator--bottom':bottom}">
-  <div class="progress-indicator__loader">
-  <div [@piTrigger]="state1" (@piTrigger.done)="onDone($event)" class="progress-indicator__loader-dot"></div>
-    <div [@piTrigger]="state2" (@piTrigger.done)="onDone($event)" class="progress-indicator__loader-dot"></div>
-    <div [@piTrigger]="state3" (@piTrigger.done)="onDone($event)" class="progress-indicator__loader-dot"></div>
-    <div [@piTrigger]="state4" (@piTrigger.done)="onDone($event)" class="progress-indicator__loader-dot"></div>
-    <div [@piTrigger]="state5" (@piTrigger.done)="onDone($event)" class="progress-indicator__loader-dot"></div>
-  </div>
-  </div>
+<div class="progress-indicator">
+  <div class="progress-indicator__dot"></div>
+  <div class="progress-indicator__dot"></div>
+  <div class="progress-indicator__dot"></div>
+  <div class="progress-indicator__dot"></div>
+  <div class="progress-indicator__dot"></div>
+</div>

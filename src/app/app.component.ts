@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 
-import * as css from '../theming.scss';
-console.log(css);
+import { TreeNode, TreeModel, TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions } from 'angular-tree-component';
+import {ACT_ITEMS} from "./ActItem.constant";
 
 
 @Component({
@@ -10,17 +10,7 @@ console.log(css);
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements OnInit {
-  title = 'buttons2';
-  testw: number;
-  ngOnInit() {
+export class AppComponent {
 
-    const css = 'a {color: pink;}';
-    const head = document.getElementsByTagName('head')[0];
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    style.appendChild(document.createTextNode(css));
-    head.appendChild(style);
-  }
 
 }

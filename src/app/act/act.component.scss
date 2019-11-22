@@ -1,0 +1,20 @@
+#tree-wrap{
+  margin: 0 auto;
+  height: 900px;
+  max-width: 700px;
+  border: 1px solid gray;
+}
+
+.tree-node{
+  min-width: fit-content;
+}
+
+//.tree-node-level-2.tree-node.tree-node-expanded{
+//  background-color: #E0EFFA;
+//  width: 100%;
+//}
+
+.container{
+  display: flex;
+  flex-direction: row-reverse;
+}

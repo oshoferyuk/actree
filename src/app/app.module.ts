@@ -6,27 +6,29 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatIconModule} from '@angular/material';
 import {SharedModule} from "./shared/shared.module";
-import {AngularSplitModule} from "angular-split";
-import {ResizableComponent} from "./resizable/resizable.component";
+
 import {AngularDraggableModule} from "angular2-draggable";
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
 
-import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './counter.reducer';
-import { MyCounterComponent } from './my-counter/my-counter.component';
-import { EditorContainerComponent } from './editor-container/editor-container/editor-container.component';
-import { EditorContainer2Directive } from './editor-container2/editor-container2.directive';
-import { UnderlinedInputComponent } from './underlined-input/underlined-input.component';
+
+import { TreeModule } from 'angular-tree-component';
+import { TreeItemComponent } from './tree-item/tree-item.component';
+import { ActItemActionComponent } from './tree-item/act-item-action/act-item-action.component';
+import { ActItemConditionComponent } from './tree-item/act-item-condition/act-item-condition.component';
+import {ActSelectionDirective} from './tree-item/act-selection.directive';
+import { ActSelectionSdDirective } from './tree-item/act-selection-sd.directive';
+import { ActComponent } from './act/act.component';
 
 @NgModule({
   declarations: [
+    ActSelectionDirective,
+    ActSelectionSdDirective,
     AppComponent,
-    ResizableComponent,
-    MyCounterComponent,
-    EditorContainerComponent,
-    EditorContainer2Directive,
-    UnderlinedInputComponent
+    TreeItemComponent,
+    ActItemActionComponent,
+    ActItemConditionComponent,
+    ActComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,7 @@ import { UnderlinedInputComponent } from './underlined-input/underlined-input.co
     MatTabsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ count: counterReducer })
+    TreeModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

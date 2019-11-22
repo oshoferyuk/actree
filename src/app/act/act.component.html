@@ -1,0 +1,24 @@
+<div id="tree-wrap">
+  <tree-root
+    #tree
+    [nodes]="nodes"
+    [options]="options"
+    [focused]="false"
+    (toggleExpanded)="onToggle($event)"
+    (click)="onClick($event)"
+    (event)="onEvent($event)"
+  >
+    <ng-template #treeNodeTemplate let-node let-index="index">
+      <app-tree-item [type]="node.data.type" [name]="node.data.name" [condPos]="node.data.conditionPosition"></app-tree-item>
+    </ng-template>
+  </tree-root>
+</div>
+
+<button (click)="testSelection($event)">test selection</button>
+<button (click)="selectClean($event)">clean selection</button>
+
+<button (click)="selectFirst($event)">select first</button>
+<button (click)="selectLast($event)">select last</button>
+
+<button (click)="selectPrev($event)">select prev</button>
+<button (click)="selectNext($event)">select next</button>
