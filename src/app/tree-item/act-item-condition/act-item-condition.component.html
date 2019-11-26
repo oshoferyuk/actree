@@ -1,6 +1,6 @@
-<div>
-  <div *ngFor="let row of name" class="node-content-wrapper-focused">
-    {{ row.pre }} {{row.condition}} {{row.post}}
+<div (keyup)="test($event)">
+  <div *ngFor="let row of name; let i = index">
+    {{ row.pre }} <div class="node-content-condition" [ngClass]="{'node-content-condition--active': i == selected}">{{row.condition}}</div> {{row.post}}
   </div>
 </div>
 

@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {IActionMapping, ITreeOptions, KEYS, TREE_ACTIONS} from "angular-tree-component";
 import {ACT_ITEMS, CONDITION_POSITION, UPDOWNKEYS} from "../ActItem.constant";
-import {ITreeNode} from "angular-tree-component/dist/defs/api";
+
 
 @Component({
   selector: 'app-act',
@@ -110,14 +110,58 @@ export class ActComponent implements OnInit, AfterViewInit {
     keys: {
       [KEYS.ENTER]: (tree, node, $event) => console.log(`This is ${node.data.name}`),
       [KEYS.UP]: (tree, node, $event) => {
-        this.key = UPDOWNKEYS.UP;
-        TREE_ACTIONS.PREVIOUS_NODE(tree, node, $event);
+
+
+        if(this.captured){
+          if(this.capturedIndex > 0){
+            this.capturedIndex = this.capturedIndex - 1;
+            this.capturedNode.data.selected = this.capturedIndex;
+          } else {
+            //release
+            this.capturedNode.data.selected = -1;
+            this.captured = false;
+          }
+        }
+
+    if(!this.captured){
+        this.capturedNode = node.findPreviousNode(true);
+        if(this.capturedNode.data.name[0].pre){ //IF NODE IS CONDITIONAL!!!
+          this.captured = true;
+          this.capturedIndex = this.capturedNode.data.name.length - 1;
+          this.capturedNode.data.selected = this.capturedIndex
+        }
+
+
+          this.key = UPDOWNKEYS.UP;
+          TREE_ACTIONS.PREVIOUS_NODE(tree, node, $event);
+        }
+
       },
       [KEYS.DOWN]: (tree, node, $event) => {
-        //console.log($event.target);
-        this.key = UPDOWNKEYS.DOWN;
-         TREE_ACTIONS.NEXT_NODE(tree, node, $event);
-        //node.mouseAction('click', event);
+
+        if(this.captured){
+          if(this.capturedIndex < this.capturedNode.data.name.length - 1){
+            this.capturedIndex = this.capturedIndex + 1;
+            this.capturedNode.data.selected = this.capturedIndex;
+          } else {
+            //release
+            this.capturedNode.data.selected = -1;
+            this.captured = false;
+          }
+        }
+
+  if(!this.captured){
+        this.capturedNode =  node.findNextNode(true);
+        if(this.capturedNode.data.name[0].pre){ //IF NODE IS CONDITIONAL!!!
+          this.captured = true;
+          this.capturedIndex = 0;
+          this.capturedNode.data.selected = this.capturedIndex;
+        }
+
+
+          this.key = UPDOWNKEYS.DOWN;
+          TREE_ACTIONS.NEXT_NODE(tree, node, $event);
+        }
 
       }
     }
@@ -141,6 +185,11 @@ export class ActComponent implements OnInit, AfterViewInit {
   levelClassName: string;
   currentSelectedNode = null;
   focused = false;
+
+
+  captured = false; // keyup or keydown could not be handled conditional component itself
+  capturedIndex: number;
+  capturedNode: null;
 
   constructor(public renderer: Renderer2, public el: ElementRef, private cdr: ChangeDetectorRef) {
   }

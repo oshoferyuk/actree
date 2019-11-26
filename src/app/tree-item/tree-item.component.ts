@@ -11,6 +11,7 @@ export class TreeItemComponent implements OnInit, AfterViewInit  {
   @Input('type') type: number; // ACT_ITEMS
   @Input('data') data: number; // ACT_ITEMS
   @Input('name') name: string; // change to more complex, especially for condition
+  @Input('selected') selected?: number; // pass to condition when selected
   @Input('condPos') condPos: string; // CONDITION POSITION pass only to condition
 
   constructor(public renderer: Renderer2, public el: ElementRef) { }

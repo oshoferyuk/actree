@@ -1,3 +1,9 @@
-b{
-  color: green;
+.node-content-condition{
+  display: inline-block;
+}
+
+.node-content-condition--active{
+  background-color: blue;
+  border: 1px solid red;
+  color: white;
 }
