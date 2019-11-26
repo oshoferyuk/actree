@@ -16,14 +16,10 @@ import { TreeModule } from 'angular-tree-component';
 import { TreeItemComponent } from './tree-item/tree-item.component';
 import { ActItemActionComponent } from './tree-item/act-item-action/act-item-action.component';
 import { ActItemConditionComponent } from './tree-item/act-item-condition/act-item-condition.component';
-import {ActSelectionDirective} from './tree-item/act-selection.directive';
-import { ActSelectionSdDirective } from './tree-item/act-selection-sd.directive';
 import { ActComponent } from './act/act.component';
 
 @NgModule({
   declarations: [
-    ActSelectionDirective,
-    ActSelectionSdDirective,
     AppComponent,
     TreeItemComponent,
     ActItemActionComponent,

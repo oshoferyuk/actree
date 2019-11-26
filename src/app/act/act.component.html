@@ -6,10 +6,12 @@
     [focused]="false"
     (toggleExpanded)="onToggle($event)"
     (click)="onClick($event)"
+    (focus)="onFocus($event)"
+    (activate)="onActive($event)"
     (event)="onEvent($event)"
   >
     <ng-template #treeNodeTemplate let-node let-index="index">
-      <app-tree-item [type]="node.data.type" [name]="node.data.name" [condPos]="node.data.conditionPosition"></app-tree-item>
+      <app-tree-item [type]="node.data.type" [name]="node.data.name" [data]="node.data.id" [condPos]="node.data.conditionPosition"></app-tree-item>
     </ng-template>
   </tree-root>
 </div>
@@ -22,3 +24,4 @@
 
 <button (click)="selectPrev($event)">select prev</button>
 <button (click)="selectNext($event)">select next</button>
+<button (click)="scroll($event)">scroll</button>

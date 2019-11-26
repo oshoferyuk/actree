@@ -1,6 +1,7 @@
-import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {IActionMapping, ITreeOptions, KEYS, TREE_ACTIONS} from "angular-tree-component";
-import {ACT_ITEMS, CONDITION_POSITION} from "../ActItem.constant";
+import {ACT_ITEMS, CONDITION_POSITION, UPDOWNKEYS} from "../ActItem.constant";
+import {ITreeNode} from "angular-tree-component/dist/defs/api";
 
 @Component({
   selector: 'app-act',
@@ -43,14 +44,14 @@ export class ActComponent implements OnInit, AfterViewInit {
             { id: 62, name: 'action', type: ACT_ITEMS.ACTION },
             { id: 63, name: 'action', type: ACT_ITEMS.ACTION },
             {
-              id: 6399999,
+              id: 63995999,
               type: ACT_ITEMS.CONDITION,
               conditionPosition: CONDITION_POSITION.START,
               name: [{pre:'IF', condition: 'inner condition l3', post: ''}],
               children: [
-                { id: 631, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 632, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 633, name: 'action', type: ACT_ITEMS.ACTION }
+                { id: 6731, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 6732, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 6733, name: 'action', type: ACT_ITEMS.ACTION }
               ]
             },
             {
@@ -65,25 +66,25 @@ export class ActComponent implements OnInit, AfterViewInit {
               ]
             },
             {
-              id: 6399992,
+              id: 6399993,
               type: ACT_ITEMS.CONDITION,
               conditionPosition: CONDITION_POSITION.MIDDLE,
               name: [{pre:'IF', condition: 'inner condition l3(2)', post: ''}],
               children: [
-                { id: 531, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 532, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 533, name: 'action', type: ACT_ITEMS.ACTION }
+                { id: 534, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 535, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 536, name: 'action', type: ACT_ITEMS.ACTION }
               ]
             },
             {
-              id: 6399992,
+              id: 6399995,
               type: ACT_ITEMS.CONDITION,
               conditionPosition: CONDITION_POSITION.END,
               name: [{pre:'IF', condition: 'inner condition l3(2)', post: ''}],
               children: [
-                { id: 531, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 532, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 533, name: 'action', type: ACT_ITEMS.ACTION }
+                { id: 537, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 538, name: 'action', type: ACT_ITEMS.ACTION },
+                { id: 539, name: 'action', type: ACT_ITEMS.ACTION }
               ]
             }
           ]
@@ -91,48 +92,60 @@ export class ActComponent implements OnInit, AfterViewInit {
       ]
     },
     {
-      id: 67,
+      id: 67734,
       type: ACT_ITEMS.CONDITION,
       conditionPosition: CONDITION_POSITION.THEONE,
       name: [{pre:'IF', condition: 'super condition', post: 'THEN'}],
       children: [
-        { id: 265, name: "Share the home directory of the user as \'%username%\'", type: ACT_ITEMS.ACTION },
-        { id: 374, name: 'action 2', type: ACT_ITEMS.ACTION }
+        { id: 266625, name: "Share the home directory of the user as \'%username%\'", type: ACT_ITEMS.ACTION },
+        { id: 37364, name: 'action 2', type: ACT_ITEMS.ACTION }
       ]
     },
   ];
-
+  key: number = UPDOWNKEYS.UP;
 
 
   readonly actionMapping:IActionMapping = {
-    mouse: {
-      click: TREE_ACTIONS.NEXT_NODE
-    },
+    mouse: {},
     keys: {
-      [KEYS.ENTER]: (tree, node, $event) => alert(`This is ${node.data.name}`)
+      [KEYS.ENTER]: (tree, node, $event) => console.log(`This is ${node.data.name}`),
+      [KEYS.UP]: (tree, node, $event) => {
+        this.key = UPDOWNKEYS.UP;
+        TREE_ACTIONS.PREVIOUS_NODE(tree, node, $event);
+      },
+      [KEYS.DOWN]: (tree, node, $event) => {
+        //console.log($event.target);
+        this.key = UPDOWNKEYS.DOWN;
+         TREE_ACTIONS.NEXT_NODE(tree, node, $event);
+        //node.mouseAction('click', event);
+
+      }
     }
   }
 
 
   options: ITreeOptions = {
-    scrollContainer: <HTMLElement>document.body.parentElement,
-    actionMapping: this.actionMapping
+    actionMapping: this.actionMapping,
+    levelPadding: 30,
+    useVirtualScroll: true,
+    animateExpand: true,
+    scrollOnActivate: true,
+    animateSpeed: 30,
+    animateAcceleration: 1.2,
+    scrollContainer: document.documentElement
   };
-
 
   nodeLevels: any[] = []; //node elements
   nodeLevelsAllSiblings: any[] = []; //node elements
   nodeLevelsGroupSiblings: any[] = []; //node elements
   levelClassName: string;
+  currentSelectedNode = null;
+  focused = false;
 
-  constructor(public renderer: Renderer2, public el: ElementRef) {
-
+  constructor(public renderer: Renderer2, public el: ElementRef, private cdr: ChangeDetectorRef) {
   }
 
-
   ngOnInit() {
-
-
     // for (let i = 0; i < 200; i++) {
     //   this.nodes.push({
     //     name: 'asdfasdf '
@@ -142,10 +155,30 @@ export class ActComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.tree.treeModel.expandAll();
+
   }
 
   onEvent(event: any){
-    console.log(event);
+  }
+
+  onActive(event: any){
+  }
+
+  onFocus(event: any){
+console.log("FOCUS")
+    this.focused = true;
+    const node = event.node;
+    this.currentSelectedNode = event.node;
+    // console.log('path '); console.log(node.path); console.log(node.getClass());
+
+    this.selectClean();
+    this._cleanSiblingActiveGroup();
+    this.nodeLevels = [];
+
+    this.cdr.detectChanges();
+
+    const test = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.node-content-wrapper-focused',0));
+    this.helpSelection(test[0]);
   }
 
   onToggle(event: any){
@@ -153,22 +186,68 @@ export class ActComponent implements OnInit, AfterViewInit {
   }
 
   onClick(event: any){
+    console.log('CLICK')
+    if(this.focused){
+      this.focused = false;
+      return;
+    }
+
+    this.focused = false;
+    this.deactivateActiveNode();
     this.selectClean();
     this._cleanSiblingActiveGroup();
     this.nodeLevels = [];
+
+
 
     if(event.target.nodeName == "TREE-VIEWPORT"){
       // ignore, not inside tree
       return;
     }
 
-    let parent = this.renderer.parentNode(event.target);
+    this.helpSelection(event.target);
+  }
+
+
+  deactivateActiveNode(){
+
+    if(this.currentSelectedNode){
+      this.currentSelectedNode.setIsActive(false);
+      this.currentSelectedNode.blur();
+    }
+
+
+
+    //console.log('88888888888888888888888888887777777777777777777');
+    //this.currentSelectedNode.toggleActivated();
+    //console.log(this.tree.treeModel.getFocusedNode());
+    //this.tree.treeModel.getFocusedNode().toggleActivated()
+    //this.tree.treeModel.setSelectedNode(this.currentSelectedNode)
+    //TREE_ACTIONS.DESELECT(this.tree, this.currentSelectedNode, event);
+
+    //this.currentSelectedNode.setIsSelected(false);
+    //this.cdr.detectChanges();
+    //this.tree.treeModel.setSelectedNode(this.currentSelectedNode)
+    //TREE_ACTIONS.DESELECT(this.tree, this.currentSelectedNode, event);
+  }
+
+  helpSelection(target){
+
+    if(!target){
+      return;
+    }
+
+    console.log('TARGET');
+    console.log(target);
+    let parent = this.renderer.parentNode(target);
 
 
     while(parent.className != 'angular-tree-component'){
       // parent.nodeName
       if(parent.className.includes('tree-node') && !parent.className.includes('tree-node-leaf')){
-       // console.log(parent.className);
+        console.log('88888888888888833333333333333333333333333333333 data');
+        console.log(parent.getAttribute('data'));
+
         this.nodeLevels.push(parent);
       }
 
@@ -177,11 +256,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
     this.selectFirst();
     this.selectActiveGroup();
-  }
-
-
-  testSelection(event){
-      console.log(this.nodeLevels);
+    this.moveScroll();
   }
 
 
@@ -257,9 +332,10 @@ export class ActComponent implements OnInit, AfterViewInit {
     this.nodeLevelsAllSiblings = [];
     if(this.nodeLevels.length > 1){
       const parentLevel = this.nodeLevels[1];
-      this.nodeLevelsAllSiblings = parentLevel.querySelectorAll('.' + this.levelClassName + ':not(.tree-node-leaf)')
+
+      this.nodeLevelsAllSiblings = Array.prototype.slice.call(parentLevel.querySelectorAll('.' + this.levelClassName + ':not(.tree-node-leaf)'),0);
     }else {
-      this.nodeLevelsAllSiblings = this.el.nativeElement.querySelectorAll('.' + this.levelClassName);
+      this.nodeLevelsAllSiblings = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.' + this.levelClassName),0);
     }
     console.log(this.nodeLevelsAllSiblings);
   }
@@ -268,9 +344,6 @@ export class ActComponent implements OnInit, AfterViewInit {
 
     this._cleanSiblingActiveGroup();
     const activatedSiblingsPosition = this._getActiveGroupBoundaries();
-    console.log('7777777777777777777');
-    console.log('start ' + activatedSiblingsPosition.start);
-    console.log('end ' + activatedSiblingsPosition.end);
     if(activatedSiblingsPosition.end === -1 || activatedSiblingsPosition.start === -1){
       console.log('warning [act] sibling positions are not found');
     }
@@ -294,6 +367,45 @@ export class ActComponent implements OnInit, AfterViewInit {
     this.selectGetAllSiblings();
     this.selectGetGroupSiblings();
 }
+
+  moveScroll(){
+    console.log('height****');
+    console.log('offset height ' + <HTMLElement>this.nodeLevels[0].offsetHeight);
+    console.log('offset top ' + <HTMLElement>this.nodeLevels[0].offsetTop);
+
+    // offsetHeight: 864
+    // offsetTop: 118
+
+
+    if(!this.isScrolledIntoView(this.nodeLevels[0])){
+      const scrollNode = this.nodeLevels[0];
+
+      //console.log('scrolling node ---------------');
+      //console.log('node top ' + scrollNode.top);
+
+      if(this.key === UPDOWNKEYS.UP){
+        scrollNode.scrollIntoView({block: "start", behavior: "smooth"});
+      } else {
+        scrollNode.scrollIntoView({block: "end", behavior: "smooth"});
+      }
+    }
+
+
+  }
+
+
+  isScrolledIntoView(el) {
+    var rect = el.getBoundingClientRect();
+    var elemTop = rect.top;
+    var elemBottom = rect.bottom;
+
+    // Only completely visible elements return true:
+    var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+    // Partially visible elements return true:
+    //isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+    return isVisible;
+  }
+
 
 private _cleanSiblingActiveGroup(){
   this.nodeLevelsAllSiblings.forEach(el => {
@@ -328,6 +440,13 @@ private _getActiveGroupBoundaries(){
     }
   });
   return {start, end};
+}
+
+
+
+scroll(){
+  let el = document.getElementById('test333');
+  el.scrollIntoView();
 }
 
 }

@@ -9,3 +9,8 @@ export const CONDITION_POSITION = {
   MIDDLE: "middle",
   END: "end"
 };
+
+export const UPDOWNKEYS = {
+  UP: 0,
+  DOWN: 1
+};

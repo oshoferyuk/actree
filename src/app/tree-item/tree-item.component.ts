@@ -9,6 +9,7 @@ import {ACT_ITEMS} from "../ActItem.constant";
 })
 export class TreeItemComponent implements OnInit, AfterViewInit  {
   @Input('type') type: number; // ACT_ITEMS
+  @Input('data') data: number; // ACT_ITEMS
   @Input('name') name: string; // change to more complex, especially for condition
   @Input('condPos') condPos: string; // CONDITION POSITION pass only to condition
 
@@ -28,12 +29,9 @@ export class TreeItemComponent implements OnInit, AfterViewInit  {
         levelNode = this.renderer.parentNode(levelNode);
         }
       this.renderer.addClass(levelNode, this.condPos);
+      this.renderer.setAttribute(levelNode, "data", "" + this.data); // set data attribute to pass to selection section mechanism
       }
 
-  }
-
-  test(event){
-    alert('tree item clicked');
   }
 
 }

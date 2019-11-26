@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Host, HostListener, Optional, Renderer2} from '@angular/core';
-import {TreeItemComponent} from "./tree-item.component";
+import {TreeItemComponent} from "../tree-item/tree-item.component";
 import {ActSelectionSdDirective} from "./act-selection-sd.directive";
 
 @Directive({
