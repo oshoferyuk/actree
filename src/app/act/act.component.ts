@@ -1,90 +1,117 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {IActionMapping, ITreeOptions, KEYS, TREE_ACTIONS} from "angular-tree-component";
+import {
+  AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import {IActionMapping, ITreeOptions, KEYS, TREE_ACTIONS, TreeComponent} from "angular-tree-component";
 import {ACT_ITEMS, CONDITION_POSITION, UPDOWNKEYS} from "../ActItem.constant";
 
 
 @Component({
   selector: 'app-act',
   templateUrl: './act.component.html',
-  styleUrls: ['./act.component.scss']
+  styleUrls: ['./act.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ActComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('tree', { static: false }) tree;
-  @ViewChild('treeEl', { static: false }) treeEl: ElementRef;
+  @ViewChild('tree', { static: false, read: TreeComponent }) tree: TreeComponent;
+  @ViewChild('tree', { static: false, read: ElementRef }) treeEl: ElementRef;
 
   nodes = [
     {
       id: 1,
       type: ACT_ITEMS.CONDITION,
       conditionPosition: CONDITION_POSITION.START,
-      name: [{pre:'IFs', condition: 'super condition', post: 'THEN'}],
+      name: [{pre:'IF', condition: 'If the user is located under the \'10k users (aurora.softerra.llc)\' container', post: 'THEN'}],
       children: [
         { id: 2, name: "Share the home directory of the user as \'%username%\'", type: ACT_ITEMS.ACTION },
-        { id: 3, name: 'action 2', type: ACT_ITEMS.ACTION }
+        { id: 3, name: 'Create the \'\\%username%\' home directory for the user and map it to \'Z:\' drive', type: ACT_ITEMS.ACTION }
       ]
     },
     {
       id: 4,
       type: ACT_ITEMS.CONDITION,
       conditionPosition: CONDITION_POSITION.END,
-      name: [{pre:'ELSE IF', condition: 'super condition', post: 'AND'},
-        {pre:'', condition: 'another super condition', post: 'AND'},
-        {pre:'', condition: 'cond 3', post: 'THEN'}],
+      name: [{pre:'ELSE IF', condition: 'the user is a member of the \'.TEST  group', post: 'AND'},
+        {pre:'', condition: 'the user is a member of the \'.B  group', post: 'AND'},
+        {pre:'', condition: 'the user is a member of the \'.C  group', post: 'THEN'}],
       children: [
-        { id: 5, name: 'action 5', type: ACT_ITEMS.ACTION },
-        { id: 51, name: 'action 51', type: ACT_ITEMS.ACTION },
+        { id: 5, name: "'Activate an Office 365 account for the user: set Location to \'%c%\'", type: ACT_ITEMS.ACTION },
+        { id: 51, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
         {
           id: 6,
           type: ACT_ITEMS.CONDITION,
           conditionPosition: CONDITION_POSITION.THEONE,
-          name: [{pre:'IF', condition: 'inner condition l2', post: ''}],
+          name: [{pre:'IF', condition: 'inner condition l2', post: 'THEN'}],
           children: [
-            { id: 61, name: 'action', type: ACT_ITEMS.ACTION },
-            { id: 62, name: 'action', type: ACT_ITEMS.ACTION },
-            { id: 63, name: 'action', type: ACT_ITEMS.ACTION },
+            { id: 61, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+            { id: 62, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+            { id: 63, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
             {
               id: 63995999,
               type: ACT_ITEMS.CONDITION,
               conditionPosition: CONDITION_POSITION.START,
-              name: [{pre:'IF', condition: 'inner condition l3', post: ''}],
+              name: [{pre:'IF', condition: 'inner condition l3', post: 'THEN'}],
               children: [
-                { id: 6731, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 6732, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 6733, name: 'action', type: ACT_ITEMS.ACTION }
+                { id: 6731, name: 'Add the user to the \'.TEST (aurora.softerra.llc\\Offices)\' group', type: ACT_ITEMS.ACTION },
+                { id: 6732, name: 'Add the user to the \'.TEST (aurora.softerra.llc\\Offices)\' group', type: ACT_ITEMS.ACTION },
+                { id: 6733, name: 'Add the user to the \'.TEST (aurora.softerra.llc\\Offices)\' group', type: ACT_ITEMS.ACTION }
               ]
             },
             {
               id: 6399992,
               type: ACT_ITEMS.CONDITION,
               conditionPosition: CONDITION_POSITION.MIDDLE,
-              name: [{pre:'IF', condition: 'inner condition l3(2)', post: ''}],
+              name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'THEN'}],
               children: [
-                { id: 531, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 532, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 533, name: 'action', type: ACT_ITEMS.ACTION }
+                { id: 531, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                { id: 532, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                  {
+                    id: 76399992,
+                    type: ACT_ITEMS.CONDITION,
+                    conditionPosition: CONDITION_POSITION.START,
+                    name: [{pre:'IF', condition: 'inner condition l4(1)', post: 'THEN'}],
+                    children: [
+                      { id: 7534, name: 'Activate an Office 365 account for the user A', type: ACT_ITEMS.ACTION },
+                      { id: 7535, name: 'Activate an Office 365 account for the user B', type: ACT_ITEMS.ACTION },
+                      { id: 7536, name: 'Activate an Office 365 account for the user C', type: ACT_ITEMS.ACTION },
+                    ]
+                  },
+                  {
+                    id: 7399992,
+                    type: ACT_ITEMS.CONDITION,
+                    conditionPosition: CONDITION_POSITION.END,
+                    name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
+                    children: [
+                      { id: 7537, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                      { id: 7538, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                      { id: 7539, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION }
+                    ]
+                  },
+                { id: 533, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
               ]
             },
             {
               id: 6399993,
               type: ACT_ITEMS.CONDITION,
               conditionPosition: CONDITION_POSITION.MIDDLE,
-              name: [{pre:'IF', condition: 'inner condition l3(2)', post: ''}],
+              name: [{pre:'IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
               children: [
-                { id: 534, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 535, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 536, name: 'action', type: ACT_ITEMS.ACTION }
+                { id: 534, name: 'Archive the home directory of the user A', type: ACT_ITEMS.ACTION },
+                { id: 535, name: 'Archive the home directory of the user B', type: ACT_ITEMS.ACTION },
+                { id: 536, name: 'Archive the home directory of the user C', type: ACT_ITEMS.ACTION },
               ]
             },
             {
               id: 6399995,
               type: ACT_ITEMS.CONDITION,
               conditionPosition: CONDITION_POSITION.END,
-              name: [{pre:'IF', condition: 'inner condition l3(2)', post: ''}],
+              name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'THEN'}],
               children: [
-                { id: 537, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 538, name: 'action', type: ACT_ITEMS.ACTION },
-                { id: 539, name: 'action', type: ACT_ITEMS.ACTION }
+                { id: 537, name: 'Archive the home directory of the user D', type: ACT_ITEMS.ACTION },
+                { id: 538, name: 'Archive the home directory of the user E', type: ACT_ITEMS.ACTION },
+                { id: 539, name: 'Archive the home directory of the user F', type: ACT_ITEMS.ACTION },
+                { id: 530, name: 'Archive the home directory of the user E', type: ACT_ITEMS.ACTION }
               ]
             }
           ]
@@ -106,10 +133,32 @@ export class ActComponent implements OnInit, AfterViewInit {
 
 
   readonly actionMapping:IActionMapping = {
-    mouse: {},
+    mouse: {
+      click: (tree, node, $event) => {
+        //this.deactivateActiveNode();
+        if(this.captured){
+          this.capturedNode = node;
+          node.data.selected = this.capturedIndex;
+          TREE_ACTIONS.TOGGLE_ACTIVE_MULTI(tree, node, $event);
+
+          //TREE_ACTIONS.ACTIVATE(tree, node, $event);
+
+        }
+
+        if(!this.captured){
+          TREE_ACTIONS.TOGGLE_ACTIVE_MULTI(tree, node, $event);
+          //TREE_ACTIONS.ACTIVATE(tree, node, $event);
+        }
+
+      }
+    },
     keys: {
       [KEYS.ENTER]: (tree, node, $event) => console.log(`This is ${node.data.name}`),
       [KEYS.UP]: (tree, node, $event) => {
+
+    if(!node){
+      node = this.capturedNode;
+    }
 
 
         if(this.captured){
@@ -125,6 +174,11 @@ export class ActComponent implements OnInit, AfterViewInit {
 
     if(!this.captured){
         this.capturedNode = node.findPreviousNode(true);
+
+        if(!this.capturedNode){
+          return; //first node
+        }
+
         if(this.capturedNode.data.name[0].pre){ //IF NODE IS CONDITIONAL!!!
           this.captured = true;
           this.capturedIndex = this.capturedNode.data.name.length - 1;
@@ -139,6 +193,10 @@ export class ActComponent implements OnInit, AfterViewInit {
       },
       [KEYS.DOWN]: (tree, node, $event) => {
 
+        if(!node){
+          node = this.capturedNode;
+        }
+
         if(this.captured){
           if(this.capturedIndex < this.capturedNode.data.name.length - 1){
             this.capturedIndex = this.capturedIndex + 1;
@@ -151,7 +209,14 @@ export class ActComponent implements OnInit, AfterViewInit {
         }
 
   if(!this.captured){
-        this.capturedNode =  node.findNextNode(true);
+
+
+        this.capturedNode =  !!node ? node.findNextNode(true) : this.capturedNode.findNextNode(true);
+
+        if(!this.capturedNode){
+          return; //last node
+        }
+
         if(this.capturedNode.data.name[0].pre){ //IF NODE IS CONDITIONAL!!!
           this.captured = true;
           this.capturedIndex = 0;
@@ -179,7 +244,7 @@ export class ActComponent implements OnInit, AfterViewInit {
     scrollContainer: document.documentElement
   };
 
-  nodeLevels: any[] = []; //node elements
+  nodeLevels: HTMLElement[] = []; //node elements
   nodeLevelsAllSiblings: any[] = []; //node elements
   nodeLevelsGroupSiblings: any[] = []; //node elements
   levelClassName: string;
@@ -189,7 +254,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
   captured = false; // keyup or keydown could not be handled conditional component itself
   capturedIndex: number;
-  capturedNode: null;
+  capturedNode;
 
   constructor(public renderer: Renderer2, public el: ElementRef, private cdr: ChangeDetectorRef) {
   }
@@ -207,6 +272,11 @@ export class ActComponent implements OnInit, AfterViewInit {
 
   }
 
+  onCaptured(capturedIndex){
+    this.captured = true;
+    this.capturedIndex = +capturedIndex;
+  }
+
   onEvent(event: any){
   }
 
@@ -214,7 +284,6 @@ export class ActComponent implements OnInit, AfterViewInit {
   }
 
   onFocus(event: any){
-console.log("FOCUS")
     this.focused = true;
     const node = event.node;
     this.currentSelectedNode = event.node;
@@ -231,11 +300,10 @@ console.log("FOCUS")
   }
 
   onToggle(event: any){
-    this.tree.treeModel.expandAll();
+    //this.tree.treeModel.expandAll();
   }
 
   onClick(event: any){
-    console.log('CLICK')
     if(this.focused){
       this.focused = false;
       return;
@@ -294,7 +362,7 @@ console.log("FOCUS")
     while(parent.className != 'angular-tree-component'){
       // parent.nodeName
       if(parent.className.includes('tree-node') && !parent.className.includes('tree-node-leaf')){
-        console.log('88888888888888833333333333333333333333333333333 data');
+        console.log('======= data');
         console.log(parent.getAttribute('data'));
 
         this.nodeLevels.push(parent);
@@ -396,8 +464,6 @@ console.log("FOCUS")
     if(activatedSiblingsPosition.end === -1 || activatedSiblingsPosition.start === -1){
       console.log('warning [act] sibling positions are not found');
     }
-    console.log('all siblings');
-    console.log(this.nodeLevelsAllSiblings);
 
     this._cleanSiblingActiveGroup();
     this.nodeLevelsGroupSiblings = [];
@@ -418,24 +484,16 @@ console.log("FOCUS")
 }
 
   moveScroll(){
-    console.log('height****');
-    console.log('offset height ' + <HTMLElement>this.nodeLevels[0].offsetHeight);
-    console.log('offset top ' + <HTMLElement>this.nodeLevels[0].offsetTop);
 
-    // offsetHeight: 864
-    // offsetTop: 118
+    const scrollNode = this.nodeLevels[0];
+    const treeContainer = this.treeEl.nativeElement.querySelector('tree-viewport');
 
+    if(this.isOutOfScrolledView(scrollNode, treeContainer)){
 
-    if(!this.isScrolledIntoView(this.nodeLevels[0])){
-      const scrollNode = this.nodeLevels[0];
-
-      //console.log('scrolling node ---------------');
-      //console.log('node top ' + scrollNode.top);
-
-      if(this.key === UPDOWNKEYS.UP){
-        scrollNode.scrollIntoView({block: "start", behavior: "smooth"});
+      if(this.key === UPDOWNKEYS.UP || scrollNode.clientHeight > window.innerHeight){
+        scrollNode.scrollIntoView(true);
       } else {
-        scrollNode.scrollIntoView({block: "end", behavior: "smooth"});
+        scrollNode.scrollIntoView(false);
       }
     }
 
@@ -443,16 +501,40 @@ console.log("FOCUS")
   }
 
 
-  isScrolledIntoView(el) {
-    var rect = el.getBoundingClientRect();
-    var elemTop = rect.top;
-    var elemBottom = rect.bottom;
+  isOutOfScrolledView(element, container) {
+
+
+    console.log('////////////////////////000000000000----------------------->>')
+    const cTop = container.scrollTop;
+    const cBottom = cTop + container.clientHeight;
+
+    console.log('container top ' + cTop);
+    console.log('container bottom ' + cBottom);
+
+    const eTop = element.offsetTop;
+    const eBottom = eTop + element.clientHeight;
+console.log('element top ' + eTop);
+console.log('element bottom ' + eBottom);
+console.log('window ' +  window.innerHeight);
+
+
+
+
+
+
+
+    // out
+    return (eTop < cTop || eBottom > cBottom);
+
+//    const elementRect = element.getBoundingClientRect();
+//    const eTop = elementRect.top;
+//    const eBottom = elementRect.bottom;
 
     // Only completely visible elements return true:
-    var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+    //var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
     // Partially visible elements return true:
     //isVisible = elemTop < window.innerHeight && elemBottom >= 0;
-    return isVisible;
+    //return isVisible;
   }
 
 

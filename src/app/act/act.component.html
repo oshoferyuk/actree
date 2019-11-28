@@ -11,7 +11,7 @@
     (event)="onEvent($event)"
   >
     <ng-template #treeNodeTemplate let-node let-index="index">
-      <app-tree-item [type]="node.data.type" [name]="node.data.name" [data]="node.data.id" [selected]="node.data.selected" [condPos]="node.data.conditionPosition"></app-tree-item>
+      <app-tree-item (captured)="onCaptured($event)" [type]="node.data.type" [name]="node.data.name" [data]="node.data.id" [selected]="node.data.selected" [condPos]="node.data.conditionPosition"></app-tree-item>
     </ng-template>
   </tree-root>
 </div>

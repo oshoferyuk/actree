@@ -1,4 +1,7 @@
-import {AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
+import {
+  AfterContentInit, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output,
+  Renderer2
+} from '@angular/core';
 import {ACT_ITEMS} from "../ActItem.constant";
 
 
@@ -13,6 +16,7 @@ export class TreeItemComponent implements OnInit, AfterViewInit  {
   @Input('name') name: string; // change to more complex, especially for condition
   @Input('selected') selected?: number; // pass to condition when selected
   @Input('condPos') condPos: string; // CONDITION POSITION pass only to condition
+  @Output() captured = new EventEmitter<number>();
 
   constructor(public renderer: Renderer2, public el: ElementRef) { }
 
@@ -32,7 +36,10 @@ export class TreeItemComponent implements OnInit, AfterViewInit  {
       this.renderer.addClass(levelNode, this.condPos);
       this.renderer.setAttribute(levelNode, "data", "" + this.data); // set data attribute to pass to selection section mechanism
       }
+  }
 
+  onCaptured(index){
+    this.captured.next(index);
   }
 
 }

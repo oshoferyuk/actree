@@ -1,6 +1,10 @@
 <div (keyup)="test($event)">
   <div *ngFor="let row of name; let i = index">
-    {{ row.pre }} <div class="node-content-condition" [ngClass]="{'node-content-condition--active': i == selected}">{{row.condition}}</div> {{row.post}}
+    <div class="node-content-condition-pre"> {{ row.pre }} <div (click)="onClick($event)"
+                       class="node-content-condition"
+                       [ngClass]="{'node-content-condition--active': i == selected}"
+                       [attr.data-condition-index]="i"
+                      >{{row.condition}}</div> {{row.post}}
   </div>
 </div>
 

@@ -30,5 +30,7 @@ $buttons2-theme: mat-light-theme($buttons2-primary, $buttons2-accent, $buttons2-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+@import '~angular-tree-component/dist/angular-tree-component.css';
+
 
 

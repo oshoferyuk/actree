@@ -1,4 +1,4 @@
 <app-act-item-action [name]="name" *ngIf="type==0"></app-act-item-action>
-<app-act-item-condition [name]="name" [selected]="selected" *ngIf="type==1"></app-act-item-condition>
+<app-act-item-condition (captured)="onCaptured($event)" [name]="name" [selected]="selected" *ngIf="type==1"></app-act-item-condition>
 
 
