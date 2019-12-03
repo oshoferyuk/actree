@@ -18,6 +18,9 @@ import { ActItemActionComponent } from './tree-item/act-item-action/act-item-act
 import { ActItemConditionComponent } from './tree-item/act-item-condition/act-item-condition.component';
 import { ActComponent } from './act/act.component';
 import {ActSelectionDirective} from "./tree-item/act-selection.directive";
+import {ActSelectionService} from "./act/act.selection.service";
+import {ActScrollService} from "./act/act.scroll.service";
+import {ActMappingService} from "./act/act.mapping.service";
 
 @NgModule({
   declarations: [
@@ -41,7 +44,7 @@ import {ActSelectionDirective} from "./tree-item/act-selection.directive";
     BrowserAnimationsModule,
     TreeModule.forRoot()
   ],
-  providers: [],
+  providers: [ActSelectionService, ActScrollService, ActMappingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

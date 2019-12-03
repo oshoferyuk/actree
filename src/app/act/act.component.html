@@ -8,20 +8,9 @@
     (click)="onClick($event)"
     (focus)="onFocus($event)"
     (activate)="onActive($event)"
-    (event)="onEvent($event)"
   >
     <ng-template #treeNodeTemplate let-node let-index="index">
       <app-tree-item (captured)="onCaptured($event)" [type]="node.data.type" [name]="node.data.name" [data]="node.data.id" [selected]="node.data.selected" [condPos]="node.data.conditionPosition"></app-tree-item>
     </ng-template>
   </tree-root>
 </div>
-
-<button (click)="testSelection($event)">test selection</button>
-<button (click)="selectClean($event)">clean selection</button>
-
-<button (click)="selectFirst($event)">select first</button>
-<button (click)="selectLast($event)">select last</button>
-
-<button (click)="selectPrev($event)">select prev</button>
-<button (click)="selectNext($event)">select next</button>
-<button (click)="scroll($event)">scroll</button>

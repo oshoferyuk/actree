@@ -5,6 +5,10 @@ import {
 } from '@angular/core';
 import {IActionMapping, ITreeOptions, KEYS, TREE_ACTIONS, TreeComponent} from "angular-tree-component";
 import {ACT_ITEMS, CONDITION_POSITION, UPDOWNKEYS} from "../ActItem.constant";
+import {ITreeNode} from "angular-tree-component/dist/defs/api";
+import {ActSelectionService} from "./act.selection.service";
+import {ActScrollService} from "./act.scroll.service";
+import {ActMappingService} from "./act.mapping.service";
 
 
 @Component({
@@ -130,104 +134,15 @@ export class ActComponent implements OnInit, AfterViewInit {
       ]
     },
   ];
-  key: number = UPDOWNKEYS.UP;
 
 
   readonly actionMapping:IActionMapping = {
     mouse: {
-      click: (tree, node, $event) => {
-        //this.deactivateActiveNode();
-        if(this.captured){
-          this.capturedNode = node;
-          node.data.selected = this.capturedIndex;
-          //TREE_ACTIONS.TOGGLE_ACTIVE_MULTI(tree, node, $event);
-          TREE_ACTIONS.ACTIVATE(tree, node, $event);
-        }
-
-        if(!this.captured){
-          TREE_ACTIONS.TOGGLE_ACTIVE_MULTI(tree, node, $event);
-          //TREE_ACTIONS.ACTIVATE(tree, node, $event);
-        }
-
-      }
+      click: (tree, node, $event) => {this.mappingHelper.onClick(tree, node, $event); }
     },
     keys: {
-      [KEYS.ENTER]: (tree, node, $event) => console.log(`This is ${node.data.name}`),
-      [KEYS.UP]: (tree, node, $event) => {
-
-    if(!node){
-      node = this.capturedNode;
-    }
-
-
-        if(this.captured){
-          if(this.capturedIndex > 0){
-            this.capturedIndex = this.capturedIndex - 1;
-            this.capturedNode.data.selected = this.capturedIndex;
-          } else {
-            //release
-            this.capturedNode.data.selected = -1;
-            this.captured = false;
-          }
-        }
-
-    if(!this.captured){
-        this.capturedNode = node.findPreviousNode(true);
-
-        if(!this.capturedNode){
-          return; //first node
-        }
-
-        if(this.capturedNode.data.name[0].pre){ //IF NODE IS CONDITIONAL!!!
-          this.captured = true;
-          this.capturedIndex = this.capturedNode.data.name.length - 1;
-          this.capturedNode.data.selected = this.capturedIndex
-        }
-
-
-          this.key = UPDOWNKEYS.UP;
-          TREE_ACTIONS.PREVIOUS_NODE(tree, node, $event);
-        }
-
-      },
-      [KEYS.DOWN]: (tree, node, $event) => {
-
-        if(!node){
-          node = this.capturedNode;
-        }
-
-        if(this.captured){
-          if(this.capturedIndex < this.capturedNode.data.name.length - 1){
-            this.capturedIndex = this.capturedIndex + 1;
-            this.capturedNode.data.selected = this.capturedIndex;
-          } else {
-            //release
-            this.capturedNode.data.selected = -1;
-            this.captured = false;
-          }
-        }
-
-  if(!this.captured){
-
-
-        this.capturedNode =  !!node ? node.findNextNode(true) : this.capturedNode.findNextNode(true);
-
-        if(!this.capturedNode){
-          return; //last node
-        }
-
-        if(this.capturedNode.data.name[0].pre){ //IF NODE IS CONDITIONAL!!!
-          this.captured = true;
-          this.capturedIndex = 0;
-          this.capturedNode.data.selected = this.capturedIndex;
-        }
-
-
-          this.key = UPDOWNKEYS.DOWN;
-          TREE_ACTIONS.NEXT_NODE(tree, node, $event);
-        }
-
-      }
+      [KEYS.UP]: (tree, node, $event) => { this.mappingHelper.onKeysUp(tree, node, $event); },
+      [KEYS.DOWN]: (tree, node, $event) => { this.mappingHelper.onKeysDown(tree, node, $event); }
     }
   }
 
@@ -243,23 +158,20 @@ export class ActComponent implements OnInit, AfterViewInit {
     scrollContainer: document.documentElement
   };
 
-  nodeLevels: HTMLElement[] = []; //node elements
-  nodeLevelsAllSiblings: any[] = []; //node elements
-  nodeLevelsGroupSiblings: any[] = []; //node elements
+  nodeLevels: HTMLElement[] = [];
+  nodeLevelsAllSiblings: HTMLElement[] = [];
+  nodeLevelsGroupSiblings: HTMLElement[] = [];
   levelClassName: string;
   currentSelectedNode = null;
   focused = false;
 
-
-  captured = false; // keyup or keydown could not be handled conditional component itself
-  capturedIndex: number;
-  capturedNode;
-
   constructor(public renderer: Renderer2,
+              public selectionHelper: ActSelectionService,
+              public scrollHelper: ActScrollService,
+              public mappingHelper: ActMappingService,
               public el: ElementRef,
               private cdr: ChangeDetectorRef,
-              private viewContainerRef: ViewContainerRef,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+              ) {
   }
 
   ngOnInit() {
@@ -272,12 +184,11 @@ export class ActComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.tree.treeModel.expandAll();
-
   }
 
   onCaptured(capturedIndex){
-    this.captured = true;
-    this.capturedIndex = +capturedIndex;
+    this.mappingHelper.captured = true;
+    this.mappingHelper.capturedIndex = +capturedIndex;
   }
 
   onEvent(event: any){
@@ -292,15 +203,16 @@ export class ActComponent implements OnInit, AfterViewInit {
     this.currentSelectedNode = event.node;
     // console.log('path '); console.log(node.path); console.log(node.getClass());
 
-    this.selectClean();
-    this._cleanSiblingActiveGroup();
+    this.selectionHelper.selectClean(this.renderer, this.nodeLevels);
+    this.selectionHelper.cleanSiblingActiveGroup(this.renderer, this.nodeLevelsAllSiblings);
     this.nodeLevels = [];
 
     this.cdr.detectChanges();
 
-    const test = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.node-content-wrapper-focused',0));
-    this.helpSelection(test[0]);
-    this.addNavigation(test[0]);
+    const nodeContentWrapperNodes = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.node-content-wrapper-focused',0));
+    this.helpSelection(this.renderer, nodeContentWrapperNodes[0], this.el, this.nodeLevels);
+    this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl);
+
   }
 
   onToggle(event: any){
@@ -314,43 +226,22 @@ export class ActComponent implements OnInit, AfterViewInit {
     }
 
     this.focused = false;
-    this.deactivateActiveNode();
-    this.selectClean();
-    this._cleanSiblingActiveGroup();
+    this.selectionHelper.deactivateActiveNode(this.currentSelectedNode);
+    this.selectionHelper.selectClean(this.renderer, this.nodeLevels);
+    this.selectionHelper.cleanSiblingActiveGroup(this.renderer, this.nodeLevelsAllSiblings);
     this.nodeLevels = [];
 
 
 
     if(event.target.nodeName == "TREE-VIEWPORT"){
-      // ignore, not inside tree
-      return;
+      return; // ignore, not inside tree
     }
 
-    this.helpSelection(event.target);
+    this.helpSelection(this.renderer, event.target, this.el, this.nodeLevels);
+    this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl);
   }
 
-// currentSelectedNode: HTMLElement
-  deactivateActiveNode(){
-
-    if(this.currentSelectedNode){
-      this.currentSelectedNode.setIsActive(false);
-      this.currentSelectedNode.blur();
-    }
-
-
-
-    //this.currentSelectedNode.toggleActivated();
-    //this.tree.treeModel.getFocusedNode().toggleActivated()
-    //this.tree.treeModel.setSelectedNode(this.currentSelectedNode)
-    //TREE_ACTIONS.DESELECT(this.tree, this.currentSelectedNode, event);
-
-    //this.currentSelectedNode.setIsSelected(false);
-    //this.cdr.detectChanges();
-    //this.tree.treeModel.setSelectedNode(this.currentSelectedNode)
-    //TREE_ACTIONS.DESELECT(this.tree, this.currentSelectedNode, event);
-  }
-
-  helpSelection(target){
+  helpSelection(renderer, target, el, nodeLevels){
 
     if(!target){
       return;
@@ -358,7 +249,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
     console.log('TARGET');
     console.log(target);
-    let parent = this.renderer.parentNode(target);
+    let parent = renderer.parentNode(target);
 
 
     while(parent.className != 'angular-tree-component'){
@@ -370,235 +261,14 @@ export class ActComponent implements OnInit, AfterViewInit {
         this.nodeLevels.push(parent);
       }
 
-      parent = this.renderer.parentNode(parent);
+      parent = renderer.parentNode(parent);
     }
 
-    this.selectFirst();
-    this.selectNavigation();
-    this.selectActiveGroup();
-    this.moveScroll();
+    this.selectionHelper.selectFirst(renderer, nodeLevels);
+    this.selectionHelper.selectNavigation(renderer, el, nodeLevels);
+
+    this.levelClassName = this.selectionHelper.selectGetLevelClassName(nodeLevels);
+    this.nodeLevelsAllSiblings  = this.selectionHelper.selectGetAllSiblings(this.el, nodeLevels, this.levelClassName);
+    this.nodeLevelsGroupSiblings = this.selectionHelper.selectGetGroupSiblings(renderer, this.nodeLevelsAllSiblings);
   }
-
-  selectClean(){
-    this.nodeLevels.forEach(node => {
-      this.renderer.removeClass(node, 'active');
-    });
-  }
-
-  selectByNumber(order: number){
-    if(order >= this.nodeLevels.length || order < 0)
-      return;
-        this.renderer.addClass(this.nodeLevels[order], 'active');
-  }
-
-  unSelectByNumber(order: number){
-    if(order >= this.nodeLevels.length || order < 0)
-      return;
-    this.renderer.removeClass(this.nodeLevels[order], 'active');
-  }
-
-  selectFindActive(){
-    let found = -1;
-    this.nodeLevels.forEach((node,i) => {
-      console.log(` search ${node.className}`);
-      if(node.className.includes('active')){
-        found = i;
-      }
-    });
-    return found;
-  }
-
-  selectNext(){
-    const activeIndex = this.selectFindActive();
-    this.unSelectByNumber(activeIndex);
-    this.selectByNumber(activeIndex + 1);
-  }
-
-  selectPrev(){
-    const activeIndex = this.selectFindActive();
-    this.unSelectByNumber(activeIndex);
-    this.selectByNumber(activeIndex - 1);
-  }
-
-  selectFirst(){
-    this.selectClean();
-    if(this.nodeLevels[0]){
-      this.renderer.addClass(this.nodeLevels[0], 'active');
-    }
-  }
-  selectNavigation(){
-
-    let selectedNavigationNodes = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.' + 'act-item-condition__navigation'),0);
-    selectedNavigationNodes.forEach(sNode => {
-      this.renderer.removeClass(sNode, 'active');
-    });
-    selectedNavigationNodes = Array.prototype.slice.call(this.nodeLevels[0].querySelectorAll('.' + 'act-item-condition__navigation'),0);
-    this.renderer.addClass(selectedNavigationNodes[0], 'active');
-  }
-
-  selectLast(){
-    this.selectClean();
-    const length = this.nodeLevels.length;
-    if(length > 0){
-      this.renderer.addClass(this.nodeLevels[length - 1], 'active');
-    }
-  }
-
-  selectGetLevelClassName(){
-    if(this.nodeLevels.length < 1){
-      console.log('warning [act] invoke selectActiveGroup for empty set');
-      return;
-    }
-
-    const selectedNode = this.nodeLevels[0];
-    const selectedNodeClassNames = selectedNode.className.split(' ');
-    return selectedNodeClassNames[0];
-  }
-
-  selectGetAllSiblings(){
-    this.levelClassName = this.selectGetLevelClassName();
-    this.nodeLevelsAllSiblings = [];
-    if(this.nodeLevels.length > 1){
-      const parentLevel = this.nodeLevels[1];
-
-      this.nodeLevelsAllSiblings = Array.prototype.slice.call(parentLevel.querySelectorAll('.' + this.levelClassName + ':not(.tree-node-leaf)'),0);
-    }else {
-      this.nodeLevelsAllSiblings = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.' + this.levelClassName),0);
-    }
-    console.log(this.nodeLevelsAllSiblings);
-  }
-
-  selectGetGroupSiblings(){
-
-    this._cleanSiblingActiveGroup();
-    const activatedSiblingsPosition = this._getActiveGroupBoundaries();
-    if(activatedSiblingsPosition.end === -1 || activatedSiblingsPosition.start === -1){
-      console.log('warning [act] sibling positions are not found');
-    }
-
-    this._cleanSiblingActiveGroup();
-    this.nodeLevelsGroupSiblings = [];
-    this.nodeLevelsAllSiblings.forEach((el,i) => {
-      if(activatedSiblingsPosition.start <= i && i <= activatedSiblingsPosition.end){
-        this.nodeLevelsGroupSiblings.push(el);
-        this.renderer.addClass(el, 'active-group');
-      }
-    });
-    console.log('group siblings');
-    console.log(this.nodeLevelsGroupSiblings);
-  }
-
-  selectActiveGroup(){
-
-    this.selectGetAllSiblings();
-    this.selectGetGroupSiblings();
-}
-
-
-  addNavigation(target){
-
-    //const componentFactory = this.componentFactoryResolver.resolveComponentFactory(LoaderComponent);
-    //this.componentInstance = this.viewContainerRef.createComponent(componentFactory);
-
-
-  }
-
-
-  moveScroll(){
-
-    const scrollNode = this.nodeLevels[0];
-    const treeContainer = this.treeEl.nativeElement.querySelector('tree-viewport');
-
-    if(this.isOutOfScrolledView(scrollNode, treeContainer)){
-
-      if(this.key === UPDOWNKEYS.UP || scrollNode.clientHeight > window.innerHeight){
-        scrollNode.scrollIntoView(true);
-      } else {
-        scrollNode.scrollIntoView(false);
-      }
-    }
-
-
-  }
-
-
-  isOutOfScrolledView(element, container) {
-
-
-    console.log('////////////////////////000000000000----------------------->>')
-    const cTop = container.scrollTop;
-    const cBottom = cTop + container.clientHeight;
-
-    console.log('container top ' + cTop);
-    console.log('container bottom ' + cBottom);
-
-    const eTop = element.offsetTop;
-    const eBottom = eTop + element.clientHeight;
-console.log('element top ' + eTop);
-console.log('element bottom ' + eBottom);
-console.log('window ' +  window.innerHeight);
-
-
-
-
-
-
-
-    // out
-    return (eTop < cTop || eBottom > cBottom);
-
-//    const elementRect = element.getBoundingClientRect();
-//    const eTop = elementRect.top;
-//    const eBottom = elementRect.bottom;
-
-    // Only completely visible elements return true:
-    //var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
-    // Partially visible elements return true:
-    //isVisible = elemTop < window.innerHeight && elemBottom >= 0;
-    //return isVisible;
-  }
-
-
-private _cleanSiblingActiveGroup(){
-  this.nodeLevelsAllSiblings.forEach(el => {
-    this.renderer.removeClass(el, 'active-group');
-  });
-}
-
-private _getActiveGroupBoundaries(){
-  let start = -1;
-  let end = -1;
-  let found = false;
-  this.nodeLevelsAllSiblings.forEach((el, i) => {
-      if(el.className.includes('theone') && el.className.includes('active') ){
-        start = i;
-        end = i;
-        return;
-      }
-
-    if(el.className.includes('start')){
-      start = i;
-    }
-
-    if(el.className.includes('active')){
-      found = true;
-    }
-
-    if(el.className.includes('end')){
-      if(found){
-        end = i;
-        return;
-      }
-    }
-  });
-  return {start, end};
-}
-
-
-
-scroll(){
-  let el = document.getElementById('test333');
-  el.scrollIntoView();
-}
-
 }
