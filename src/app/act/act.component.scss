@@ -1,19 +1,17 @@
 #tree-wrap{
   margin: 0 auto;
   height: 900px;
-  max-width: 720px;
-  padding: 0px;
+  max-width: 80%;
+  padding: 0px 0px 0px 10px;
   border: 1px solid gray;
+}
+.angular-tree-component{
+  width: calc(100% - 10px);
 }
 
 .tree-node{
   min-width: fit-content;
 }
-
-//.tree-node-level-2.tree-node.tree-node-expanded{
-//  background-color: #E0EFFA;
-//  width: 100%;
-//}
 
 .container{
   display: flex;
@@ -23,47 +21,48 @@
 /////////////////////////////////////////////////////////////////
 
 
-.tree-children.tree-children::before, .tree.tree::before {
+//.tree-children::before {
+.angular-tree-component{
+  overflow: visible;
+  padding-left: 10px;
+}
+.angular-tree-component::before {
   content: "";
   position: absolute;
   border-left: 1px dotted #23527c !important;
   height: 100%;
-  top: -14px;
-  left: 8px
-}
-
-.tree.tree {
-  padding-left: 0;
-  margin-left: 5px
+  top: -15px;
+  left: 4px // -8px
 }
 
 
+.tree-node:not(.tree-node-leaf) > tree-node-wrapper > div .node-content-wrapper{
 
-
-
+  width: 100%;
+}
 
 
 tree-node>div .toggle-children-wrapper {
-  width: 8px;
-  height: 5px;
+  width: 3px;
+  height: 0px;
   border: 1px solid #23527c;
   position: absolute;
-  left: 3px;
+  left: 0px;
   margin-top: 5px;
-  margin-left: 0;
+  margin-left: -20px;
   display: inline-block;
-  background-color: #fff;
+  background-color: greenyellow;
   z-index: 1
 }
 
 tree-node>div .toggle-children-wrapper::before {
   content: "";
   display: inline-block;
-  width: 7px;
+  width: 5px;
   border-top: 1px solid #23527c;
   position: absolute;
-  top: 5px;
-  left: 2px
+  top: 3px;
+  left: 1px
 }
 
 tree-node>div .toggle-children-wrapper.toggle-children-wrapper-collapsed::after {
@@ -72,24 +71,29 @@ tree-node>div .toggle-children-wrapper.toggle-children-wrapper-collapsed::after 
   height: 5px;
   border-left: 1px solid #23527c;
   position: absolute;
-  top: 2px;
-  left: 5px
+  top: 1px;
+  left: 3px
 }
+
 
 tree-node>div .toggle-children-wrapper .toggle-children {
   display: none
 }
 
 tree-node>div .node-content-wrapper {
-  margin-left: 4px
+  margin-left: 4px;
+}
+
+tree-node:not(.tree-node-leaf)>div .node-content-wrapper-focused{
+  //width: 100%;
 }
 
 tree-node>div::before {
-  left: 14px
+  left: 14px;
 }
 
 tree-node>div>.node-wrapper>tree-node-expander>.toggle-children-wrapper {
-  left: 22px
+  left: 22px;
 }
 
 

@@ -1,5 +1,6 @@
 import {
-  AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild,
+  AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, OnInit, Renderer2, ViewChild,
+  ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
 import {IActionMapping, ITreeOptions, KEYS, TREE_ACTIONS, TreeComponent} from "angular-tree-component";
@@ -139,10 +140,8 @@ export class ActComponent implements OnInit, AfterViewInit {
         if(this.captured){
           this.capturedNode = node;
           node.data.selected = this.capturedIndex;
-          TREE_ACTIONS.TOGGLE_ACTIVE_MULTI(tree, node, $event);
-
-          //TREE_ACTIONS.ACTIVATE(tree, node, $event);
-
+          //TREE_ACTIONS.TOGGLE_ACTIVE_MULTI(tree, node, $event);
+          TREE_ACTIONS.ACTIVATE(tree, node, $event);
         }
 
         if(!this.captured){
@@ -256,7 +255,11 @@ export class ActComponent implements OnInit, AfterViewInit {
   capturedIndex: number;
   capturedNode;
 
-  constructor(public renderer: Renderer2, public el: ElementRef, private cdr: ChangeDetectorRef) {
+  constructor(public renderer: Renderer2,
+              public el: ElementRef,
+              private cdr: ChangeDetectorRef,
+              private viewContainerRef: ViewContainerRef,
+              private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
@@ -297,6 +300,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
     const test = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.node-content-wrapper-focused',0));
     this.helpSelection(test[0]);
+    this.addNavigation(test[0]);
   }
 
   onToggle(event: any){
@@ -325,7 +329,7 @@ export class ActComponent implements OnInit, AfterViewInit {
     this.helpSelection(event.target);
   }
 
-
+// currentSelectedNode: HTMLElement
   deactivateActiveNode(){
 
     if(this.currentSelectedNode){
@@ -335,9 +339,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
 
 
-    //console.log('88888888888888888888888888887777777777777777777');
     //this.currentSelectedNode.toggleActivated();
-    //console.log(this.tree.treeModel.getFocusedNode());
     //this.tree.treeModel.getFocusedNode().toggleActivated()
     //this.tree.treeModel.setSelectedNode(this.currentSelectedNode)
     //TREE_ACTIONS.DESELECT(this.tree, this.currentSelectedNode, event);
@@ -372,10 +374,10 @@ export class ActComponent implements OnInit, AfterViewInit {
     }
 
     this.selectFirst();
+    this.selectNavigation();
     this.selectActiveGroup();
     this.moveScroll();
   }
-
 
   selectClean(){
     this.nodeLevels.forEach(node => {
@@ -423,6 +425,15 @@ export class ActComponent implements OnInit, AfterViewInit {
     if(this.nodeLevels[0]){
       this.renderer.addClass(this.nodeLevels[0], 'active');
     }
+  }
+  selectNavigation(){
+
+    let selectedNavigationNodes = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.' + 'act-item-condition__navigation'),0);
+    selectedNavigationNodes.forEach(sNode => {
+      this.renderer.removeClass(sNode, 'active');
+    });
+    selectedNavigationNodes = Array.prototype.slice.call(this.nodeLevels[0].querySelectorAll('.' + 'act-item-condition__navigation'),0);
+    this.renderer.addClass(selectedNavigationNodes[0], 'active');
   }
 
   selectLast(){
@@ -482,6 +493,16 @@ export class ActComponent implements OnInit, AfterViewInit {
     this.selectGetAllSiblings();
     this.selectGetGroupSiblings();
 }
+
+
+  addNavigation(target){
+
+    //const componentFactory = this.componentFactoryResolver.resolveComponentFactory(LoaderComponent);
+    //this.componentInstance = this.viewContainerRef.createComponent(componentFactory);
+
+
+  }
+
 
   moveScroll(){
 

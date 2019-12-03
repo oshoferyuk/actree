@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Host, HostListener, Optional, Renderer2} from '@angular/core';
-import {TreeItemComponent} from "../tree-item/tree-item.component";
-import {ActSelectionSdDirective} from "./act-selection-sd.directive";
+import {TreeItemComponent} from "./tree-item.component";
+import {ActSelectionSdDirective} from "../trash/act-selection-sd.directive";
 
 @Directive({
   selector: 'tree-root',
@@ -12,7 +12,12 @@ export class ActSelectionDirective {
 
   @HostListener('click') newColor($event) {
 
-    //const levelNodes = this.el.nativeElement.querySelector('[class^="tree-node-level"]');
+ //   const levelNodes = this.el.nativeElement.querySelector('[class^="tree-node-level"]');
+
+    const test = this.el.nativeElement.querySelector('[class="node-wrapper"]');
+    console.log('-----------------7777754-');
+    console.log(test);
+
 //     console.log(this.el);
 //     const levelNodes = this.el.nativeElement.querySelectorAll('tree-node'); // TODO ashof improve, not all, but levels if needed
 // console.log('------------ levels');
