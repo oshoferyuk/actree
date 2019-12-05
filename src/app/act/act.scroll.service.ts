@@ -36,14 +36,14 @@ export class ActScrollService {
     const cTop = container.scrollTop;
     const cBottom = cTop + container.clientHeight;
 
-    console.log('container top ' + cTop);
-    console.log('container bottom ' + cBottom);
+    //console.log('container top ' + cTop);
+    //console.log('container bottom ' + cBottom);
 
     const eTop = element.offsetTop;
     const eBottom = eTop + element.clientHeight;
-    console.log('element top ' + eTop);
-    console.log('element bottom ' + eBottom);
-    console.log('window ' +  window.innerHeight);
+    //console.log('element top ' + eTop);
+    //console.log('element bottom ' + eBottom);
+    //console.log('window ' +  window.innerHeight);
 
     // out
     return (eTop < cTop || eBottom > cBottom);

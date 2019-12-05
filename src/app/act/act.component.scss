@@ -1,6 +1,8 @@
 #tree-wrap{
   margin: 0 auto;
-  height: 900px;
+  height: 90vh;
+  max-height: 100vh;
+  overflow: hidden;
   max-width: 80%;
   padding: 0px 0px 0px 10px;
   border: 1px solid gray;
@@ -21,7 +23,7 @@
 /////////////////////////////////////////////////////////////////
 
 
-//.tree-children::before {
+
 .angular-tree-component{
   overflow: visible;
   padding-left: 10px;
@@ -54,6 +56,13 @@ tree-node>div .toggle-children-wrapper {
   background-color: greenyellow;
   z-index: 1
 }
+//xxxxxxxxxxxxxxx
+.tree-node-level-1.active .toggle-children-wrapper {
+  margin-left: -21px !important;
+}
+
+
+
 
 tree-node>div .toggle-children-wrapper::before {
   content: "";
@@ -64,6 +73,8 @@ tree-node>div .toggle-children-wrapper::before {
   top: 3px;
   left: 1px
 }
+
+
 
 tree-node>div .toggle-children-wrapper.toggle-children-wrapper-collapsed::after {
   content: "";
@@ -80,20 +91,17 @@ tree-node>div .toggle-children-wrapper .toggle-children {
   display: none
 }
 
-tree-node>div .node-content-wrapper {
-  margin-left: 4px;
-}
 
-tree-node:not(.tree-node-leaf)>div .node-content-wrapper-focused{
-  //width: 100%;
-}
+
+
+
 
 tree-node>div::before {
   left: 14px;
 }
 
-tree-node>div>.node-wrapper>tree-node-expander>.toggle-children-wrapper {
-  left: 22px;
-}
+
+
+
 
 

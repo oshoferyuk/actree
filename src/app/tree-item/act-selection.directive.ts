@@ -3,7 +3,7 @@ import {TreeItemComponent} from "./tree-item.component";
 import {ActSelectionSdDirective} from "../trash/act-selection-sd.directive";
 
 @Directive({
-  selector: 'tree-root',
+  selector: 'tree-root33',
   providers: [{
     provide:ActSelectionSdDirective, useClass: ActSelectionSdDirective
   }]
@@ -15,8 +15,7 @@ export class ActSelectionDirective {
  //   const levelNodes = this.el.nativeElement.querySelector('[class^="tree-node-level"]');
 
     const test = this.el.nativeElement.querySelector('[class="node-wrapper"]');
-    console.log('-----------------7777754-');
-    console.log(test);
+
 
 //     console.log(this.el);
 //     const levelNodes = this.el.nativeElement.querySelectorAll('tree-node'); // TODO ashof improve, not all, but levels if needed

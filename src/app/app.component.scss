@@ -1,7 +1,7 @@
 
 .node-content-wrapper-focused .act-item-action{
   background-color: blue;
-  border: 1px solid red;
+  outline: 1px solid pink;
   color: white;
 }
 
@@ -14,33 +14,68 @@ tree-viewport{
   position: relative;
 }
 
+.tree-node-level-1.active-group{
+
+  margin-left:11px;
+  color: red;
+}
+
+.tree-node-level-1{
+  border-left: 1px solid white;
+}
+
+
 [class|=tree-node-level].active{
   background-color: #E0EFFA;
 
 }
 
-[class|=tree-node-level].start:not(.tree-node-leaf)::before,
-[class|=tree-node-level].theone:not(.tree-node-leaf)::before
+//.tree-node-level-1:first-child{
+//  border-left: 1px solid red;
+//}
+
+
+
+[class|=tree-node-level]:not(.tree-node-leaf)
 {
-  content:'';
-  position:absolute;
-  display:block;
-  height:1px;
-  width: 90%;
-  background:lightgray;
-  left:50%;
-  z-index:1000;
-  transform:translateX(-50%);
-  -webkit-transform:translateX(-50%);
+  border-top: 1px solid red;
+  //border-left: 1px solid white;
 }
 
-.active-group, :not(.active-group > .active-group){
-  margin-left: 9px;
+
+[class|=tree-node-level] > .active-group + [class|=tree-node-level]{
+  border-top: 3px solid green !important;
 }
+
+.active-group > tree-node-wrapper > .node-wrapper{
+  //padding-left: 29px !important;
+  //color: red !important;
+}
+
+
+
+
+
 
 .theone.active-group{
-  border: 1px solid #7FBBEB;
+
+  //border-top: 1px  solid #7FBBEB !important;
+
+  border-right: 1px  solid #7FBBEB !important;
+  border-top: 1px  solid #7FBBEB !important;
+  border-bottom: 1px  solid #7FBBEB !important;
+  border-left: 1px  solid #7FBBEB !important;
+  //outline: 1px  solid #7FBBEB !important;
+
+
+
+  //border-right: 1px solid #7FBBEB;
+  //border-left: 1px solid #7FBBEB;
+  //border-bottom: 1px solid #7FBBEB;
 }
+
+
+
 
 .start.active-group{
   border-top:    1px solid #7FBBEB;
@@ -59,4 +94,7 @@ tree-viewport{
   border-left:  1px solid #7FBBEB;
 }
 
-
+.node-drop-slot {
+  display: block;
+  height: 0px;
+}
