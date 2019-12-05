@@ -33,38 +33,39 @@ tree-viewport{
 //.tree-node-level-1:first-child{
 //  border-left: 1px solid red;
 //}
+.tree-node-level-1.active-first{
+  margin-bottom: 0px;
+}
+
+.tree-node-level-1:not(.active-first){
+  margin-bottom: 1px;
+}
+
+
 
 
 
 [class|=tree-node-level]:not(.tree-node-leaf)
 {
-  border-top: 1px solid red;
-  //border-left: 1px solid white;
-}
-
-
-[class|=tree-node-level] > .active-group + [class|=tree-node-level]{
-  border-top: 3px solid green !important;
-}
-
-.active-group > tree-node-wrapper > .node-wrapper{
-  //padding-left: 29px !important;
-  //color: red !important;
+ border-top: 1px solid red;
 }
 
 
 
 
-
+[class|=tree-node-level] tree-node-wrapper{
+  border-bottom: 1px  solid #7FBBEB;
+}
 
 .theone.active-group{
 
   //border-top: 1px  solid #7FBBEB !important;
 
-  border-right: 1px  solid #7FBBEB !important;
-  border-top: 1px  solid #7FBBEB !important;
-  border-bottom: 1px  solid #7FBBEB !important;
-  border-left: 1px  solid #7FBBEB !important;
+  border-right: 1px  solid #7FBBEB;
+  border-top: 1px  solid #7FBBEB;
+  border-bottom: 1px  solid transparent;
+  border-left: 1px  solid #7FBBEB;
+
   //outline: 1px  solid #7FBBEB !important;
 
 

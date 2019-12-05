@@ -235,7 +235,7 @@ export class ActComponent implements OnInit, AfterViewInit {
       parent = renderer.parentNode(parent);
     }
 
-    this.selectionHelper.selectFirst(renderer, nodeLevels);
+    this.selectionHelper.selectActive(renderer, nodeLevels);
     this.selectionHelper.selectNavigation(renderer, el, nodeLevels);
 
     this.levelClassName = this.selectionHelper.selectGetLevelClassName(nodeLevels);

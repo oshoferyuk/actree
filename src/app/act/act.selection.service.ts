@@ -11,16 +11,22 @@ export class ActSelectionService {
   }
 
 
-  selectFirst(renderer, nodeLevels: any){
+  selectActive(renderer, nodeLevels: any){
     this.selectClean(renderer, nodeLevels);
+
     if(nodeLevels[0]){
-      renderer.addClass(nodeLevels[0], 'active');
+      renderer.addClass(nodeLevels[0], 'active'); // current active
+    }
+
+    if(nodeLevels[nodeLevels.length - 1]){
+      renderer.addClass(nodeLevels[nodeLevels.length - 1], 'active-first'); //active first means that we somewhere inside of this level 1
     }
   }
 
   selectClean(renderer, nodeLevels: HTMLElement[]){
     nodeLevels.forEach(node => {
       renderer.removeClass(node, 'active');
+      renderer.removeClass(node, 'active-first');
     });
   }
 
