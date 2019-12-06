@@ -42,13 +42,30 @@ tree-viewport{
 
 
 
-
-
-[class|=tree-node-level]:not(.tree-node-leaf)
+.active [class|=tree-node-level]:not(.tree-node-leaf):not(.tree-node-level-1)
 {
- border-top: 1px solid red;
+  border-top: 1px solid #7FBBEB;
 }
 
+[class|=tree-node-level].active-group:not(.tree-node-leaf):not(.tree-node-level-1){
+  border-top: 1px solid #7FBBEB;
+}
+//a:has(> img)
+
+
+[class|=tree-node-level]:not(.tree-node-leaf):not(.tree-node-level-1)
+{
+  border-top: 1px solid red;
+}
+
+
+.tree-node-level-1.active-first{
+  border-bottom: 1px solid #7FBBEB !important;
+}
+
+.tree-node-level-1{
+  border-bottom: 1px solid red;
+}
 
 
 

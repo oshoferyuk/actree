@@ -39,9 +39,9 @@ export class ActComponent implements OnInit, AfterViewInit {
   options: ITreeOptions = {
     actionMapping: this.actionMapping,
     levelPadding: 30,
-    useVirtualScroll: true,
+    //useVirtualScroll: true,
     //animateExpand: true,
-    scrollOnActivate: true,
+    //scrollOnActivate: true,
     //animateSpeed: 500,
     //animateAcceleration: 1.2,
     //scrollContainer: document.documentElement
@@ -128,18 +128,7 @@ export class ActComponent implements OnInit, AfterViewInit {
                                 children: [
                                   { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
                                   { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                                  { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                                  {
-                                    id: this.random(),
-                                    type: ACT_ITEMS.CONDITION,
-                                    conditionPosition: CONDITION_POSITION.THEONE,
-                                    name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
-                                    children: [
-                                      { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                                      { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                                      { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION }
-                                    ]
-                                  }
+                                  { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION }
                                 ]
                               }
                             ]
@@ -190,7 +179,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
     const nodeContentWrapperNodes = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.node-content-wrapper-focused',0));
     this.helpSelection(this.renderer, nodeContentWrapperNodes[0], this.el, this.nodeLevels);
-    this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl, this.tree, node);
+    this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl);
 
 
 
@@ -221,7 +210,7 @@ export class ActComponent implements OnInit, AfterViewInit {
     }
 
     this.helpSelection(this.renderer, event.target, this.el, this.nodeLevels);
-    //this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl);
+    this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl);
   }
 
   helpSelection(renderer, target, el, nodeLevels){
