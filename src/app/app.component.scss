@@ -15,9 +15,7 @@ tree-viewport{
 }
 
 .tree-node-level-1.active-group{
-
   margin-left:11px;
-  color: red;
 }
 
 .tree-node-level-1{
@@ -30,9 +28,10 @@ tree-viewport{
 
 }
 
-//.tree-node-level-1:first-child{
-//  border-left: 1px solid red;
-//}
+.tree-node-loading{
+  display: none;
+}
+
 .tree-node-level-1.active-first{
   margin-bottom: 0px;
 }
@@ -58,21 +57,11 @@ tree-viewport{
 }
 
 .theone.active-group{
-
-  //border-top: 1px  solid #7FBBEB !important;
-
   border-right: 1px  solid #7FBBEB;
   border-top: 1px  solid #7FBBEB;
   border-bottom: 1px  solid transparent;
   border-left: 1px  solid #7FBBEB;
 
-  //outline: 1px  solid #7FBBEB !important;
-
-
-
-  //border-right: 1px solid #7FBBEB;
-  //border-left: 1px solid #7FBBEB;
-  //border-bottom: 1px solid #7FBBEB;
 }
 
 

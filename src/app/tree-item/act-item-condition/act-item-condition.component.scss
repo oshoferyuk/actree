@@ -24,4 +24,23 @@
 }
 
 
+//.tree-node > tree-node-wrapper .node-wrapper > .node-content-wrapper > tree-node-content > app-tree-item >
+.act-item-condition__navigation.active{
+  display: block;
+}
 
+.act-item-condition__navigation{
+  border: 1px solid green;
+  margin-left: auto;
+  display: none;
+
+  span{
+    border: 1px solid blue;
+    display: inline-block;
+    width: 7px;
+    height: 2px;
+    margin: 0px 3px;
+    font-size: 10pt;
+
+  }
+}

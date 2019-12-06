@@ -41,7 +41,7 @@ export class ActComponent implements OnInit, AfterViewInit {
     levelPadding: 30,
     useVirtualScroll: true,
     //animateExpand: true,
-    //scrollOnActivate: true,
+    scrollOnActivate: true,
     //animateSpeed: 500,
     //animateAcceleration: 1.2,
     //scrollContainer: document.documentElement
@@ -71,7 +71,7 @@ export class ActComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     this.dataHelper.select().subscribe((data)=>{
-      //this.nodes = data;
+      this.nodes = data;
 
 
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -170,6 +170,12 @@ export class ActComponent implements OnInit, AfterViewInit {
   }
 
   onFocus(event: any){
+    console.log('wwwwwwwwwwwwwwwwwwwwwwwww');
+    //if(this.focused){
+      //this.focused = false;
+      //return;
+    //}
+
     this.focused = true;
     const node = event.node;
     this.currentSelectedNode = event.node;
@@ -184,7 +190,11 @@ export class ActComponent implements OnInit, AfterViewInit {
 
     const nodeContentWrapperNodes = Array.prototype.slice.call(this.el.nativeElement.querySelectorAll('.node-content-wrapper-focused',0));
     this.helpSelection(this.renderer, nodeContentWrapperNodes[0], this.el, this.nodeLevels);
-    this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl);
+    this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl, this.tree, node);
+
+
+
+    //this.tree.treeModel.virtualScroll.scrollIntoView(node, true);
 
   }
 
@@ -211,7 +221,7 @@ export class ActComponent implements OnInit, AfterViewInit {
     }
 
     this.helpSelection(this.renderer, event.target, this.el, this.nodeLevels);
-    this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl);
+    //this.scrollHelper.moveScroll(this.mappingHelper.key, this.nodeLevels, this.treeEl);
   }
 
   helpSelection(renderer, target, el, nodeLevels){
