@@ -8,6 +8,7 @@ import {ActScrollService} from "./act.scroll.service";
 import {ActMappingService} from "./act.mapping.service";
 import {ActDataService} from "./act.data.service";
 import {ACT_ITEMS, CONDITION_POSITION} from "../ActItem.constant";
+import {timeInterval} from "rxjs/internal/operators";
 
 
 @Component({
@@ -38,6 +39,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
 
   options: ITreeOptions = {
+    //getChildren: this.getChildren.bind(this),
     actionMapping: this.actionMapping,
     levelPadding: 30,
     //useVirtualScroll: true,
@@ -72,6 +74,9 @@ export class ActComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
+    console.log('start ******************** ');
+    this.nodes = [];
+    setTimeout( () => {
     this.dataHelper.select().subscribe((data)=>{
       this.nodes = data;
 
@@ -131,6 +136,7 @@ export class ActComponent implements OnInit, AfterViewInit {
                                 type: ACT_ITEMS.CONDITION,
                                 conditionPosition: CONDITION_POSITION.THEONE,
                                 name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
+                                //hasChildren: true
                                 children: [
                                   { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
                                   { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
@@ -150,10 +156,46 @@ export class ActComponent implements OnInit, AfterViewInit {
         );
       }
     });
+
+    }, 400);
+
+
   }
 
+  getChildren(node: any) {
+    const newNodes = this.data33.map((c) => Object.assign({}, c));
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(newNodes), 10000);
+    });
+  }
+
+  data33 =
+    [
+        { id: this.random(), name: 'Cancel all meetings organized by the user66', type: ACT_ITEMS.ACTION },
+        { id: this.random(), name: 'Cancel all meetings organized by the user66', type: ACT_ITEMS.ACTION },
+        { id: this.random(), name: 'Cancel all meetings organized by the use77r', type: ACT_ITEMS.ACTION }
+      ]
+
+
   ngAfterViewInit() {
-     this.tree.treeModel.expandAll();
+
+    const test = setInterval(()=>{
+      if(document.getElementsByClassName('act-item-condition__content')){
+        console.log('99999999999999999');
+        this.tree.treeModel.expandAll();
+      }
+      if(document.getElementsByClassName('tree-node-leaf').length > 30){
+        clearInterval(test);
+        alert(1);
+      }
+
+
+
+
+    }, 500);
+
+
   }
 
   onCaptured(capturedIndex){
