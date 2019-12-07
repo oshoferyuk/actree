@@ -11,6 +11,9 @@ import {ACT_ITEMS} from "./ActItem.constant";
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+show = false;
 
-
+test(){
+  this.show = !this.show;
+}
 }

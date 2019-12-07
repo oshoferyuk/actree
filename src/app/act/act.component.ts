@@ -22,6 +22,7 @@ export class ActComponent implements OnInit, AfterViewInit {
   @ViewChild('tree', { static: false, read: ElementRef }) treeEl: ElementRef;
 
   nodes = [];
+  nodes2 = [];
 
   readonly actionMapping:IActionMapping = {
     mouse: {
@@ -40,6 +41,7 @@ export class ActComponent implements OnInit, AfterViewInit {
     actionMapping: this.actionMapping,
     levelPadding: 30,
     //useVirtualScroll: true,
+    //dropSlotHeight: 0,
     //animateExpand: true,
     //scrollOnActivate: true,
     //animateSpeed: 500,
@@ -73,11 +75,10 @@ export class ActComponent implements OnInit, AfterViewInit {
     this.dataHelper.select().subscribe((data)=>{
       this.nodes = data;
 
-
-//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-      for (let i = 1; i < 10; i++) {
+      for (let i = 1; i < 6; i++) {
         this.nodes.push({
-            id: this.random(),
+            id: i,
+            isExpanded: true,
             type: ACT_ITEMS.CONDITION,
             conditionPosition: CONDITION_POSITION.THEONE,
             name: [{pre:'IF' + i, condition: 'If the user is located under the \'10k users (aurora.softerra.llc)\' container', post: 'THEN'}],
@@ -86,6 +87,7 @@ export class ActComponent implements OnInit, AfterViewInit {
               { id: this.random(), name: 'Create the \'\\%username%\' home directory for the user and map it to \'Z:\' drive', type: ACT_ITEMS.ACTION },
               {
                 id: this.random(),
+                isExpanded: true,
                 type: ACT_ITEMS.CONDITION,
                 conditionPosition: CONDITION_POSITION.THEONE,
                 name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
@@ -95,6 +97,7 @@ export class ActComponent implements OnInit, AfterViewInit {
                   { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
                   {
                     id: this.random(),
+                    isExpanded: true,
                     type: ACT_ITEMS.CONDITION,
                     conditionPosition: CONDITION_POSITION.THEONE,
                     name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
@@ -104,6 +107,7 @@ export class ActComponent implements OnInit, AfterViewInit {
                       { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
                       {
                         id: this.random(),
+                        isExpanded: true,
                         type: ACT_ITEMS.CONDITION,
                         conditionPosition: CONDITION_POSITION.THEONE,
                         name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
@@ -113,6 +117,7 @@ export class ActComponent implements OnInit, AfterViewInit {
                           { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
                           {
                             id: this.random(),
+                            isExpanded: true,
                             type: ACT_ITEMS.CONDITION,
                             conditionPosition: CONDITION_POSITION.THEONE,
                             name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
@@ -122,6 +127,7 @@ export class ActComponent implements OnInit, AfterViewInit {
                               { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
                               {
                                 id: this.random(),
+                                isExpanded: true,
                                 type: ACT_ITEMS.CONDITION,
                                 conditionPosition: CONDITION_POSITION.THEONE,
                                 name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
@@ -147,7 +153,7 @@ export class ActComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.tree.treeModel.expandAll();
+     this.tree.treeModel.expandAll();
   }
 
   onCaptured(capturedIndex){

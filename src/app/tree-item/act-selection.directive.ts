@@ -1,20 +1,17 @@
 import {Directive, ElementRef, Host, HostListener, Optional, Renderer2} from '@angular/core';
 import {TreeItemComponent} from "./tree-item.component";
-import {ActSelectionSdDirective} from "../trash/act-selection-sd.directive";
+
 
 @Directive({
   selector: 'tree-root33',
-  providers: [{
-    provide:ActSelectionSdDirective, useClass: ActSelectionSdDirective
-  }]
 })
 export class ActSelectionDirective {
 
-  @HostListener('click') newColor($event) {
+  @HostListener('click') ddnewColor($event) {
 
  //   const levelNodes = this.el.nativeElement.querySelector('[class^="tree-node-level"]');
 
-    const test = this.el.nativeElement.querySelector('[class="node-wrapper"]');
+    //const test = this.el.nativeElement.querySelector('[class="node-wrapper"]');
 
 
 //     console.log(this.el);
@@ -60,7 +57,6 @@ export class ActSelectionDirective {
     //this.renderer.addClass(grandparent, 'active');
   }
   constructor(public renderer: Renderer2, public el: ElementRef,
-              @Host() public test: ActSelectionSdDirective,
               @Optional() @Host() public hostTreeRoot: TreeItemComponent) {
 
   }

@@ -12,7 +12,8 @@ export class ActDataService {
 
     const nodes = [
       {
-        id: 1,
+        id: 111,
+        isExpanded: true,
         type: ACT_ITEMS.CONDITION,
         conditionPosition: CONDITION_POSITION.START,
         name: [{pre:'IF', condition: 'If the user is located under the \'10k users (aurora.softerra.llc)\' container', post: 'THEN'}],
@@ -22,7 +23,8 @@ export class ActDataService {
         ]
       },
       {
-        id: 4,
+        id: 112,
+        isExpanded: true,
         type: ACT_ITEMS.CONDITION,
         conditionPosition: CONDITION_POSITION.END,
         name: [{pre:'ELSE IF', condition: 'the user is a member of the \'.TEST  group', post: 'AND'},
@@ -33,6 +35,7 @@ export class ActDataService {
           { id: 51, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
           {
             id: 6,
+            isExpanded: true,
             type: ACT_ITEMS.CONDITION,
             conditionPosition: CONDITION_POSITION.THEONE,
             name: [{pre:'IF', condition: 'inner condition l2', post: 'THEN'}],
@@ -42,6 +45,7 @@ export class ActDataService {
               { id: 63, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
               {
                 id: 63995999,
+                isExpanded: true,
                 type: ACT_ITEMS.CONDITION,
                 conditionPosition: CONDITION_POSITION.START,
                 name: [{pre:'IF', condition: 'inner condition l3', post: 'THEN'}],
@@ -53,6 +57,7 @@ export class ActDataService {
               },
               {
                 id: 6399992,
+                isExpanded: true,
                 type: ACT_ITEMS.CONDITION,
                 conditionPosition: CONDITION_POSITION.MIDDLE,
                 name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'THEN'}],
@@ -61,6 +66,7 @@ export class ActDataService {
                   { id: 532, name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
                   {
                     id: 76399992,
+                    isExpanded: true,
                     type: ACT_ITEMS.CONDITION,
                     conditionPosition: CONDITION_POSITION.START,
                     name: [{pre:'IF', condition: 'inner condition l4(1)', post: 'THEN'}],
@@ -72,6 +78,7 @@ export class ActDataService {
                   },
                   {
                     id: 7399992,
+                    isExpanded: true,
                     type: ACT_ITEMS.CONDITION,
                     conditionPosition: CONDITION_POSITION.END,
                     name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
@@ -86,6 +93,7 @@ export class ActDataService {
               },
               {
                 id: 6399993,
+                isExpanded: true,
                 type: ACT_ITEMS.CONDITION,
                 conditionPosition: CONDITION_POSITION.MIDDLE,
                 name: [{pre:'IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
@@ -97,6 +105,7 @@ export class ActDataService {
               },
               {
                 id: 6399995,
+                isExpanded: true,
                 type: ACT_ITEMS.CONDITION,
                 conditionPosition: CONDITION_POSITION.END,
                 name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'THEN'}],
@@ -112,7 +121,8 @@ export class ActDataService {
         ]
       },
       {
-        id: 67734,
+        id: 113,
+        isExpanded: true,
         type: ACT_ITEMS.CONDITION,
         conditionPosition: CONDITION_POSITION.THEONE,
         name: [{pre:'IF', condition: 'super condition', post: 'THEN'}],
