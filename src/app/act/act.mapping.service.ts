@@ -19,8 +19,14 @@ export class ActMappingService {
 
   onClick(tree, node, $event){
 
-      //this.deactivateActiveNode();
       if(this.captured){
+
+        if(this.capturedNode){ // if condition is already selected
+          this.capturedNode.data.selected = -1;
+        }
+
+
+
         this.capturedNode = node;
         node.data.selected = this.capturedIndex;
       }

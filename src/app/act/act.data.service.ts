@@ -132,7 +132,69 @@ export class ActDataService {
         ]
       },
     ];
+
+
+
+
+
+
+      nodes.push({
+          id: this.random(),
+          isExpanded: true,
+          type: ACT_ITEMS.CONDITION,
+          conditionPosition: CONDITION_POSITION.THEONE,
+          name: [{pre:'IF' + 3, condition: 'If the user is located under the \'10k users (aurora.softerra.llc)\' container', post: 'THEN'}],
+          children: [
+            { id: this.random(), name: "Share the home directory of the user as \'%username%\'", type: ACT_ITEMS.ACTION },
+            { id: this.random(), name: 'Create the \'\\%username%\' home directory for the user and map it to \'Z:\' drive', type: ACT_ITEMS.ACTION },
+            {
+              id: this.random(),
+              isExpanded: true,
+              type: ACT_ITEMS.CONDITION,
+              conditionPosition: CONDITION_POSITION.THEONE,
+              name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
+              children: [
+                { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                {
+                  id: this.random(),
+                  isExpanded: true,
+                  type: ACT_ITEMS.CONDITION,
+                  conditionPosition: CONDITION_POSITION.THEONE,
+                  name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
+                  children: [
+                    { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                    { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                    { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                    {
+                      id: this.random(),
+                      isExpanded: true,
+                      type: ACT_ITEMS.CONDITION,
+                      conditionPosition: CONDITION_POSITION.THEONE,
+                      name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
+                      children: [
+                        { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                        { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                        { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+          ]
+        }
+      );
+
+
+
     this.setState(nodes);
+  }
+
+
+  random(){
+    return Math.floor((Math.random() * 100000) + 1);
   }
 
 

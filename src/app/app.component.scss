@@ -47,7 +47,7 @@ tree-viewport{
 }
 
 
-.tree-node-level-1:not(.active-first):not(.post-after-active){
+.tree-node-level-1:not(.active-first):not(.post-after-active):not(.active-group){
   border-top: 1px solid lightgray;
   //width: 98%;
 }

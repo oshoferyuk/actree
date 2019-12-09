@@ -170,6 +170,7 @@ export class ActSelectionService {
 
     if(currentSelectedNode){
       currentSelectedNode.setIsActive(false);
+      currentSelectedNode.data.selected = -1;
       currentSelectedNode.blur();
     }
   }

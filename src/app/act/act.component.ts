@@ -68,9 +68,6 @@ export class ActComponent implements OnInit, AfterViewInit {
               ) {
   }
 
-  random(){
-    return Math.floor((Math.random() * 100000) + 1);
-  }
 
   ngOnInit() {
 
@@ -78,82 +75,6 @@ export class ActComponent implements OnInit, AfterViewInit {
     //setTimeout( () => {
     this.dataHelper.select().subscribe((data)=>{
       this.nodes = data;
-
-      for (let i = 5; i < 6; i++) {
-        this.nodes.push({
-            id: this.random(),
-            isExpanded: true,
-            type: ACT_ITEMS.CONDITION,
-            conditionPosition: CONDITION_POSITION.THEONE,
-            name: [{pre:'IF' + i, condition: 'If the user is located under the \'10k users (aurora.softerra.llc)\' container', post: 'THEN'}],
-            children: [
-              { id: this.random(), name: "Share the home directory of the user as \'%username%\'", type: ACT_ITEMS.ACTION },
-              { id: this.random(), name: 'Create the \'\\%username%\' home directory for the user and map it to \'Z:\' drive', type: ACT_ITEMS.ACTION },
-              {
-                id: this.random(),
-                isExpanded: true,
-                type: ACT_ITEMS.CONDITION,
-                conditionPosition: CONDITION_POSITION.THEONE,
-                name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
-                children: [
-                  { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                  { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                  { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                  {
-                    id: this.random(),
-                    isExpanded: true,
-                    type: ACT_ITEMS.CONDITION,
-                    conditionPosition: CONDITION_POSITION.THEONE,
-                    name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
-                    children: [
-                      { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                      { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                      { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                      {
-                        id: this.random(),
-                        isExpanded: true,
-                        type: ACT_ITEMS.CONDITION,
-                        conditionPosition: CONDITION_POSITION.THEONE,
-                        name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
-                        children: [
-                          { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                          { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                          { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                          {
-                            id: this.random(),
-                            isExpanded: true,
-                            type: ACT_ITEMS.CONDITION,
-                            conditionPosition: CONDITION_POSITION.THEONE,
-                            name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
-                            children: [
-                              { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                              { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                              { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                              {
-                                id: this.random(),
-                                isExpanded: true,
-                                type: ACT_ITEMS.CONDITION,
-                                conditionPosition: CONDITION_POSITION.THEONE,
-                                name: [{pre:'ELSE IF', condition: 'inner condition l3(2)', post: 'ELSE'}],
-                                //hasChildren: true
-                                children: [
-                                  { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                                  { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION },
-                                  { id: this.random(), name: 'Cancel all meetings organized by the user', type: ACT_ITEMS.ACTION }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-            ]
-          },
-        );
-      }
     });
 
     //}, 400);
@@ -180,23 +101,27 @@ export class ActComponent implements OnInit, AfterViewInit {
     this.mappingHelper.capturedIndex = +capturedIndex;
   }
 
+  releaseCaptured(capturedIndex){
+    this.mappingHelper.captured = false;
+    this.mappingHelper.capturedIndex = -1;
+  }
+
   onActive(event: any){
   }
 
   onFocus(event: any){
-    //if(this.focused){
-      //this.focused = false;
-      //return;
-    //}
+
 
     this.focused = true;
     const node = event.node;
+
     this.currentSelectedNode = event.node;
     // console.log('path '); console.log(node.path); console.log(node.getClass());
 
     this.selectionHelper.selectClean(this.renderer, this.nodeLevels, this.el);
     this.selectionHelper.cleanSiblingActiveGroup(this.renderer, this.nodeLevelsAllSiblings);
     this.nodeLevels = [];
+
 
     this.cdr.detectChanges();
      //this.cdr.markForCheck();
@@ -216,17 +141,19 @@ export class ActComponent implements OnInit, AfterViewInit {
   }
 
   onClick(event: any){
+
+
     if(this.focused){
       this.focused = false;
       return;
     }
+
 
     this.focused = false;
     this.selectionHelper.deactivateActiveNode(this.currentSelectedNode);
     this.selectionHelper.selectClean(this.renderer, this.nodeLevels, this.el);
     this.selectionHelper.cleanSiblingActiveGroup(this.renderer, this.nodeLevelsAllSiblings);
     this.nodeLevels = [];
-
 
 
     if(event.target.nodeName == "TREE-VIEWPORT"){

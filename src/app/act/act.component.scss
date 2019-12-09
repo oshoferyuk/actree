@@ -57,12 +57,9 @@ tree-node>div .toggle-children-wrapper {
   z-index: 1
 }
 //TODO: ashof important
-.tree-node-level-1.active .toggle-children-wrapper {
+.tree-node-level-1.active-group .toggle-children-wrapper {
   margin-left: -21px !important;
 }
-
-
-
 
 tree-node>div .toggle-children-wrapper::before {
   content: "";
@@ -74,8 +71,6 @@ tree-node>div .toggle-children-wrapper::before {
   left: 1px
 }
 
-
-
 tree-node>div .toggle-children-wrapper.toggle-children-wrapper-collapsed::after {
   content: "";
   display: inline-block;
@@ -86,22 +81,10 @@ tree-node>div .toggle-children-wrapper.toggle-children-wrapper-collapsed::after 
   left: 3px
 }
 
-
 tree-node>div .toggle-children-wrapper .toggle-children {
   display: none
 }
 
-
-
-
-
-
 tree-node>div::before {
   left: 14px;
 }
-
-
-
-
-
-
