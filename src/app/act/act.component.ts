@@ -81,7 +81,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
       for (let i = 5; i < 6; i++) {
         this.nodes.push({
-            id: i,
+            id: this.random(),
             isExpanded: true,
             type: ACT_ITEMS.CONDITION,
             conditionPosition: CONDITION_POSITION.THEONE,
