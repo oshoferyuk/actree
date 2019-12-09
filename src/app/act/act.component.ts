@@ -74,13 +74,12 @@ export class ActComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    console.log('start ******************** ');
     this.nodes = [];
-    setTimeout( () => {
+    //setTimeout( () => {
     this.dataHelper.select().subscribe((data)=>{
       this.nodes = data;
 
-      for (let i = 1; i < 6; i++) {
+      for (let i = 5; i < 6; i++) {
         this.nodes.push({
             id: i,
             isExpanded: true,
@@ -157,45 +156,23 @@ export class ActComponent implements OnInit, AfterViewInit {
       }
     });
 
-    }, 400);
+    //}, 400);
 
 
   }
-
-  getChildren(node: any) {
-    const newNodes = this.data33.map((c) => Object.assign({}, c));
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(newNodes), 10000);
-    });
-  }
-
-  data33 =
-    [
-        { id: this.random(), name: 'Cancel all meetings organized by the user66', type: ACT_ITEMS.ACTION },
-        { id: this.random(), name: 'Cancel all meetings organized by the user66', type: ACT_ITEMS.ACTION },
-        { id: this.random(), name: 'Cancel all meetings organized by the use77r', type: ACT_ITEMS.ACTION }
-      ]
 
 
   ngAfterViewInit() {
 
-    const test = setInterval(()=>{
-      if(document.getElementsByClassName('act-item-condition__content')){
-        console.log('99999999999999999');
+    //const test = setInterval(()=>{
+      //if(document.getElementsByClassName('act-item-condition__content')){
         this.tree.treeModel.expandAll();
-      }
-      if(document.getElementsByClassName('tree-node-leaf').length > 30){
-        clearInterval(test);
-        alert(1);
-      }
-
-
-
-
-    }, 500);
-
-
+      //}
+      //if(document.getElementsByClassName('tree-node-leaf').length > 30){
+        //clearInterval(test);
+        //alert(1);
+      //}
+    //}, 500);
   }
 
   onCaptured(capturedIndex){
@@ -207,7 +184,6 @@ export class ActComponent implements OnInit, AfterViewInit {
   }
 
   onFocus(event: any){
-    console.log('wwwwwwwwwwwwwwwwwwwwwwwww');
     //if(this.focused){
       //this.focused = false;
       //return;

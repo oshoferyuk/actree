@@ -40,52 +40,60 @@ tree-viewport{
   margin-bottom: 1px;
 }
 
+.active{
+  border-top: 1px solid #7FBBEB;
+  border-bottom: 1px solid #7FBBEB;
 
+}
 
 .active [class|=tree-node-level]:not(.tree-node-leaf):not(.tree-node-level-1)
 {
-  border-top: 1px solid #7FBBEB;
+  //border-top: 1px solid #7FBBEB;
 }
 
 [class|=tree-node-level].active-group:not(.tree-node-leaf):not(.tree-node-level-1){
-  border-top: 1px solid #7FBBEB;
+  //border-top: 1px solid #7FBBEB;
 }
 //a:has(> img)
 
 
-[class|=tree-node-level]:not(.tree-node-leaf):not(.tree-node-level-1)
-{
-  border-top: 1px solid red;
+.tree-node-level-1:not(.active){
+  //border-top: 1px solid red;
 }
-
 
 .tree-node-level-1.active-first{
-  border-bottom: 1px solid #7FBBEB !important;
+  //border-bottom: 1px solid #7FBBEB !important;
 }
 
-.tree-node-level-1{
-  border-bottom: 1px solid red;
-}
+
 
 
 
 [class|=tree-node-level] tree-node-wrapper{
-  border-bottom: 1px  solid #7FBBEB;
+  //border-bottom: 1px  solid #7FBBEB;
 }
 
 .theone.active-group{
   border-right: 1px  solid #7FBBEB;
-  border-top: 1px  solid #7FBBEB;
-  border-bottom: 1px  solid transparent;
+  //border-top: 1px  solid #7FBBEB;
+  //border-bottom: 1px  solid transparent;
   border-left: 1px  solid #7FBBEB;
 
 }
 
 
+.start.active-group:not(.active){
+  border-top:    1px solid #7FBBEB;
+}
+
+.end.active-group:not(.active){
+  border-bottom: 1px solid #7FBBEB;
+}
+
 
 
 .start.active-group{
-  border-top:    1px solid #7FBBEB;
+  //border-top:    1px solid #7FBBEB;
   border-right:  1px solid #7FBBEB;
   border-left:  1px solid #7FBBEB;
 }
@@ -96,7 +104,7 @@ tree-viewport{
 }
 
 .end.active-group{
-  border-bottom:    1px solid #7FBBEB;
+  //border-bottom:    1px solid #7FBBEB;
   border-right:  1px solid #7FBBEB;
   border-left:  1px solid #7FBBEB;
 }

@@ -21,6 +21,9 @@ export class ActSelectionService {
     if(nodeLevels[nodeLevels.length - 1]){
       renderer.addClass(nodeLevels[nodeLevels.length - 1], 'active-first'); //active first means that we somewhere inside of this level 1
     }
+
+
+
   }
 
   selectClean(renderer, nodeLevels: HTMLElement[]){
