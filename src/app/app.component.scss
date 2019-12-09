@@ -46,32 +46,13 @@ tree-viewport{
 
 }
 
-.active [class|=tree-node-level]:not(.tree-node-leaf):not(.tree-node-level-1)
-{
-  //border-top: 1px solid #7FBBEB;
-}
 
-[class|=tree-node-level].active-group:not(.tree-node-leaf):not(.tree-node-level-1){
-  //border-top: 1px solid #7FBBEB;
-}
-//a:has(> img)
-
-
-.tree-node-level-1:not(.active){
-  //border-top: 1px solid red;
-}
-
-.tree-node-level-1.active-first{
-  //border-bottom: 1px solid #7FBBEB !important;
+.tree-node-level-1:not(.active-first):not(.post-after-active){
+  border-top: 1px solid lightgray;
+  width: 98%;
 }
 
 
-
-
-
-[class|=tree-node-level] tree-node-wrapper{
-  //border-bottom: 1px  solid #7FBBEB;
-}
 
 .theone.active-group{
   border-right: 1px  solid #7FBBEB;
@@ -83,7 +64,7 @@ tree-viewport{
 
 
 .start.active-group:not(.active){
-  border-top:    1px solid #7FBBEB;
+  border-top: 1px solid #7FBBEB;
 }
 
 .end.active-group:not(.active){

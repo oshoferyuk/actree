@@ -11,8 +11,8 @@ export class ActSelectionService {
   }
 
 
-  selectActive(renderer, nodeLevels: any){
-    this.selectClean(renderer, nodeLevels);
+  selectActive(renderer, nodeLevels: any, el){
+    this.selectClean(renderer, nodeLevels, el);
 
     if(nodeLevels[0]){
       renderer.addClass(nodeLevels[0], 'active'); // current active
@@ -22,14 +22,50 @@ export class ActSelectionService {
       renderer.addClass(nodeLevels[nodeLevels.length - 1], 'active-first'); //active first means that we somewhere inside of this level 1
     }
 
-
-
   }
 
-  selectClean(renderer, nodeLevels: HTMLElement[]){
+  selectPostActive(el, lastSiblings, lastNodeLevels, renderer){
+    const level1s = Array.prototype.slice.call(el.nativeElement.querySelectorAll('.tree-node-level-1',0));
+
+
+    let isLastSiblingOnLevel1 = false;
+    level1s.forEach((l1,i) => {
+      if(l1 == lastSiblings){
+        isLastSiblingOnLevel1 = true;
+
+        if(level1s[i + 1]){
+          renderer.addClass(level1s[i + 1], 'post-after-active');
+        }
+        return;
+      }
+    });
+
+    if(!isLastSiblingOnLevel1){
+
+      console.log(level1s);
+      level1s.forEach((l,i) => {
+
+        if(l == lastNodeLevels){
+          console.log(i);
+          if(level1s[i + 1]){
+            //renderer.addClass(level1s[i + 1], 'post-after-active');
+          }
+        }
+      });
+
+    }
+  }
+
+  selectClean(renderer, nodeLevels: HTMLElement[], el){
     nodeLevels.forEach(node => {
       renderer.removeClass(node, 'active');
       renderer.removeClass(node, 'active-first');
+    });
+
+
+    const level1s = Array.prototype.slice.call(el.nativeElement.querySelectorAll('.tree-node-level-1',0));
+    level1s.forEach((l) => {
+          renderer.removeClass(l, 'post-after-active');
     });
   }
 

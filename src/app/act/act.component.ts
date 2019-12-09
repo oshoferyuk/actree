@@ -194,7 +194,7 @@ export class ActComponent implements OnInit, AfterViewInit {
     this.currentSelectedNode = event.node;
     // console.log('path '); console.log(node.path); console.log(node.getClass());
 
-    this.selectionHelper.selectClean(this.renderer, this.nodeLevels);
+    this.selectionHelper.selectClean(this.renderer, this.nodeLevels, this.el);
     this.selectionHelper.cleanSiblingActiveGroup(this.renderer, this.nodeLevelsAllSiblings);
     this.nodeLevels = [];
 
@@ -223,7 +223,7 @@ export class ActComponent implements OnInit, AfterViewInit {
 
     this.focused = false;
     this.selectionHelper.deactivateActiveNode(this.currentSelectedNode);
-    this.selectionHelper.selectClean(this.renderer, this.nodeLevels);
+    this.selectionHelper.selectClean(this.renderer, this.nodeLevels, this.el);
     this.selectionHelper.cleanSiblingActiveGroup(this.renderer, this.nodeLevelsAllSiblings);
     this.nodeLevels = [];
 
@@ -258,11 +258,13 @@ export class ActComponent implements OnInit, AfterViewInit {
       parent = renderer.parentNode(parent);
     }
 
-    this.selectionHelper.selectActive(renderer, nodeLevels);
+    this.selectionHelper.selectActive(renderer, nodeLevels, this.el);
     this.selectionHelper.selectNavigation(renderer, el, nodeLevels);
 
     this.levelClassName = this.selectionHelper.selectGetLevelClassName(nodeLevels);
     this.nodeLevelsAllSiblings  = this.selectionHelper.selectGetAllSiblings(this.el, nodeLevels, this.levelClassName);
     this.nodeLevelsGroupSiblings = this.selectionHelper.selectGetGroupSiblings(renderer, this.nodeLevelsAllSiblings);
+
+    this.selectionHelper.selectPostActive(el, this.nodeLevelsGroupSiblings[this.nodeLevelsGroupSiblings.length - 1], nodeLevels[nodeLevels.length - 1], renderer);
   }
 }
