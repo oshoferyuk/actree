@@ -1,0 +1,8 @@
+@mixin act-border-selection($direction) {
+    @include border-style-width($direction, solid, 1px);
+}
+
+@mixin border-style-width($direction, $style, $width) {
+    border-#{$direction}-width: $width;
+    border-#{$direction}-style: $style;
+}

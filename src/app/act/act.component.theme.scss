@@ -1,0 +1,66 @@
+@import '../../styles/variables';
+
+.tree-wrap {
+
+    border-color: $act-wrap-border-color;
+
+    .node-content-wrapper-focused .act-item-action__name{
+        background-color: #0078d7;
+        color: $act-item-action-color;
+        outline-color: $content-condition-active-border-color;
+        outline-style: solid;
+        outline-width: 1px;
+        color: $act-item-action-nav;
+    }
+
+// navigation
+
+    .angular-tree-component::before {
+        border-color: $act-main-color;
+    }
+
+    tree-node>div .toggle-children-wrapper {
+        border-color: $act-main-color;
+        background-color: $act-item-action-nav;
+    }
+
+    tree-node>div .toggle-children-wrapper.toggle-children-wrapper-collapsed::after {
+        border-color: $act-main-color;
+    }
+
+    tree-node>div .toggle-children-wrapper::before {
+        border-left: $act-main-color;
+    }
+
+
+// selection
+    [class|=tree-node-level].active {
+        background-color: #E0EFFA;
+    }
+
+    .tree-node-level-1 {
+        border-left-color: $act-item-action-nav;
+    }
+
+    .active {
+        border-top-color: $act-main-active-color;
+        border-bottom-color: $act-main-active-color;
+    }
+
+    .tree-node-level-1:not(.active-first):not(.post-after-active):not(.active-group){
+        border-top-color: $act-item-separation-color;
+    }
+
+    .start.active-group:not(.active){
+        border-top-color: $act-main-active-color;
+    }
+
+    .end.active-group:not(.active){
+        border-bottom-color: $act-main-active-color;
+    }
+
+    .one.active-group, .start.active-group, .middle.active-group, .end.active-group{
+        border-right-color: $act-main-active-color;
+        border-left-color: $act-main-active-color;
+    }
+}

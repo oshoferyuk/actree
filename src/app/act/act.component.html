@@ -1,17 +1,20 @@
-<div id="tree-wrap">
-  <tree-root
-    #tree
-    [nodes]="nodes"
-    [options]="options"
-    [focused]="false"
-    (toggleExpanded)="onToggle($event)"
-    (click)="onClick($event)"
-    (focus)="onFocus($event)"
-    (activate)="onActive($event)"
-  >
-    <ng-template #treeNodeTemplate let-node let-index="index">
-      <app-tree-item (captured)="onCaptured($event)" [type]="node.data.type" [name]="node.data.name" [data]="node.data.id" [selected]="node.data.selected" [condPos]="node.data.conditionPosition"></app-tree-item>
-    </ng-template>
-  </tree-root>
+<div class="tree-wrap">
+    <tree-root
+        #tree
+        [nodes]="treeData"
+        [options]="options"
+        [focused]="false"
+        (click)="onClick($event)"
+        (focus)="onFocus($event)">
+        <ng-template #treeNodeTemplate let-node let-index="index">
+            <adm-act-item
+                (captured)="onCaptured($event)"
+                [type]="node.data.type"
+                [name]="node.data.name"
+                [data]="node.data.id"
+                [selected]="node.data.selected"
+                [condPos]="node.data.conditionPosition">
+            </adm-act-item>
+        </ng-template>
+    </tree-root>
 </div>
-

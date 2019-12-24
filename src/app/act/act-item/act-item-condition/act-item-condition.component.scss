@@ -1,0 +1,61 @@
+@import '../../../../styles/variables';
+
+.node-content-condition{
+    display: inline-block;
+    color: $content-condition-color;
+    font-size: 12pt;
+}
+
+.node-content-condition--active{
+    background-color: $content-condition-active-bg-color;
+    border: 1px solid $content-condition-active-border-color;
+    color: $content-condition-active-color;
+}
+
+.node-content-condition__pre, .node-content-condition__post, .act-item-condition__content{
+    display: block;
+    font-size: 12pt;
+}
+
+.act-item-condition__content{
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+}
+
+.act-item-condition__conditions{
+    display: flex;
+    flex-direction: column;
+}
+
+.act-item-condition__row{
+    display: flex;
+    min-height:25px;
+}
+
+
+.act-item-condition{
+    display: flex;
+}
+
+.act-item-condition__action{
+    display: inline-block;
+}
+
+.act-item-condition__navigation.active{
+    display: block;
+}
+
+.act-item-condition__navigation{
+    margin-left: auto;
+    display: none;
+}
+
+.act-item-action__icon{
+    margin-top: .33em; // 5
+    margin-right: .1875em; // 3
+    width: 1em; // 16
+    height: 1em; // 16
+}
+
+
+

@@ -1,0 +1,21 @@
+<div class="act-item-condition">
+    <mat-icon class="act-item-action__icon" svgIcon="ac5"></mat-icon>
+    <div class="act-item-condition__conditions">
+        <div *ngFor="let row of name; let i = index" class="act-item-condition__row">
+                <div class="node-content-condition__pre">
+                    {{ row.pre }}
+                </div>
+                <div
+                    class="act-item-condition__content"
+                    (click)="onClick($event)"
+                    [ngClass]="{ 'node-content-condition--active': i == selected }"
+                    [attr.data-condition-index]="i">
+                    {{ row.condition }}
+                </div>
+                <div class="node-content-condition__post">
+                    {{ row.post }}
+                </div>
+        </div>
+    </div>
+    <adm-act-nav class="act-item-condition__navigation"></adm-act-nav>
+</div>

@@ -1,0 +1,7 @@
+<adm-act-item-action [name]="name" *ngIf="!type"></adm-act-item-action>
+<adm-act-item-condition
+    [name]="name"
+    *ngIf="type"
+    [selected]="selected"
+    (captured)="onCaptured($event)">
+</adm-act-item-condition>

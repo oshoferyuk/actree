@@ -1,0 +1,22 @@
+@import '../../../../styles/variables';
+
+:host {
+    .act-item-condition__navigation {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .act-item-condition__action {
+        width: 1.25em;
+        height: 1.25em;
+        margin-top: .1875em;
+    }
+
+    .act-item-condition__action:hover {
+        background-color: $act-item-condition-color;
+    }
+
+    .act-item-condition__action:not(:last-of-type) {
+        margin-right: 10px;
+    }
+}

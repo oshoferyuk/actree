@@ -1,0 +1,27 @@
+@import '../../../../styles/variables';
+
+.act-item-action__name{
+    display: inline-block;
+    color: $act-item-action-color;
+    font-weight: 400;
+    font-size: 12pt;
+}
+
+.act-item-action{
+    display: flex;
+}
+
+.act-item-action__icon{
+    align-self: center;
+    margin-right: .1875em; // 3
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+}
+
+.active-group .act-item-action__name{
+    margin-left: -1px;
+}
+
+
+
