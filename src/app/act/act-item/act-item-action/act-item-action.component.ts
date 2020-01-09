@@ -6,12 +6,13 @@
 //    Contains active configuration tree item action component.
 // </summary>
 
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
   selector: 'adm-act-item-action',
   templateUrl: './act-item-action.component.html',
-  styleUrls: ['./act-item-action.component.scss']
+  styleUrls: ['./act-item-action.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActItemActionComponent {
 

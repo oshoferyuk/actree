@@ -10,17 +10,16 @@ import {SharedModule} from "./shared/shared.module";
 import {AngularDraggableModule} from "angular2-draggable";
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
-
-import {ActSelectionService} from "./act/act.selection.service";
-import {ActScrollService} from "./act/act.scroll.service";
-import {ActMappingService} from "./act/act.mapping.service";
-import {ActDataService} from "./act/act.data.service";
 import {ActModule} from "./act/act.module";
+import { IconSpriteModule } from 'ng-svg-icon-sprite';
+import {ActSelectionService} from "./act/act-helpers/act.selection.service";
+import {ActScrollService} from "./act/act-helpers/act.scroll.service";
+import {ActMappingService} from "./act/act-helpers/act.mapping.service";
+import {ActDataService} from "./act/act-helpers/act.data.service";
 
 @NgModule({
   declarations: [
-    AppComponent,
-  ],
+    AppComponent,  ],
   imports: [
     BrowserModule,
     SharedModule,
@@ -32,9 +31,10 @@ import {ActModule} from "./act/act.module";
     MatTabsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ActModule
+    ActModule,
+    IconSpriteModule
   ],
-  providers: [],
+  providers: [ActSelectionService, ActScrollService, ActMappingService, ActDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

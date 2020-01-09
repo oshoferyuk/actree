@@ -7,19 +7,20 @@
 // </summary>
 
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    Renderer2
+  AfterViewInit, ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  Renderer2
 } from '@angular/core';
 
 @Component({
     selector: 'adm-act-item',
     templateUrl: './act-item.component.html',
-    styleUrls: ['./act-item.component.scss']
+    styleUrls: ['./act-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActItemComponent implements AfterViewInit
 {
@@ -34,6 +35,8 @@ export class ActItemComponent implements AfterViewInit
 
     ngAfterViewInit()
     {
+     // console.log('aaaaaaaaaaaaa')
+      /*
         if (this.type)
         {
             // TODO: ashof refactor while
@@ -49,6 +52,7 @@ export class ActItemComponent implements AfterViewInit
                 this.renderer.setAttribute(levelNode, 'data', '' + this.data); // pass to selection section mechanism
             }
         }
+        */
     }
 
     onCaptured(index)

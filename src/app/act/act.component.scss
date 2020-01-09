@@ -1,5 +1,8 @@
 @import './act.component.common';
-@import '../../styles/variables';
+
+$act-item-separation-color: gray;
+$act-main-active-color: blue;
+
 
 .tree-wrap{
     margin: 0 auto;

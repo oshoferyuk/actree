@@ -1,0 +1,23 @@
+{
+  "errors": [
+    "Entry module not found: Error: Can't resolve './src' in 'C:\\temp\\actree'\nresolve './src' in 'C:\\temp\\actree'\n  using description file: C:\\temp\\actree\\package.json (relative path: .)\n    Field 'browser' doesn't contain a valid alias configuration\n    using description file: C:\\temp\\actree\\package.json (relative path: ./src)\n      no extension\n        Field 'browser' doesn't contain a valid alias configuration\n        C:\\temp\\actree\\src is not a file\n      .wasm\n        Field 'browser' doesn't contain a valid alias configuration\n        C:\\temp\\actree\\src.wasm doesn't exist\n      .mjs\n        Field 'browser' doesn't contain a valid alias configuration\n        C:\\temp\\actree\\src.mjs doesn't exist\n      .js\n        Field 'browser' doesn't contain a valid alias configuration\n        C:\\temp\\actree\\src.js doesn't exist\n      .json\n        Field 'browser' doesn't contain a valid alias configuration\n        C:\\temp\\actree\\src.json doesn't exist\n      as directory\n        existing directory\n          using path: C:\\temp\\actree\\src\\index\n            using description file: C:\\temp\\actree\\package.json (relative path: ./src/index)\n              no extension\n                Field 'browser' doesn't contain a valid alias configuration\n                C:\\temp\\actree\\src\\index doesn't exist\n              .wasm\n                Field 'browser' doesn't contain a valid alias configuration\n                C:\\temp\\actree\\src\\index.wasm doesn't exist\n              .mjs\n                Field 'browser' doesn't contain a valid alias configuration\n                C:\\temp\\actree\\src\\index.mjs doesn't exist\n              .js\n                Field 'browser' doesn't contain a valid alias configuration\n                C:\\temp\\actree\\src\\index.js doesn't exist\n              .json\n                Field 'browser' doesn't contain a valid alias configuration\n                C:\\temp\\actree\\src\\index.json doesn't exist"
+  ],
+  "warnings": [
+    "configuration\nThe 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.\nYou can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/configuration/mode/"
+  ],
+  "version": "4.35.2",
+  "hash": "8c2cc004987a75d783b4",
+  "time": 65,
+  "builtAt": 1578555238429,
+  "publicPath": "",
+  "outputPath": "C:\\temp\\actree\\dist",
+  "assetsByChunkName": {},
+  "assets": [],
+  "filteredAssets": 0,
+  "entrypoints": {},
+  "namedChunkGroups": {},
+  "chunks": [],
+  "modules": [],
+  "filteredModules": 0,
+  "children": []
+}

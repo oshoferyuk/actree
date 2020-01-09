@@ -5,9 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "test": "bash.sh",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "generate:svg-sprite": "svg2sprite ./src/assets/icons ./src/assets/sprites/sprite.svg --stripAttrs fill --stripAttrs stroke --stripAttrs id"
   },
   "private": true,
   "dependencies": {
@@ -26,7 +27,9 @@
     "angular-tree-component": "^8.0.0",
     "angular2-draggable": "^2.3.2",
     "classlist.js": "^1.1.20150312",
+    "ng-svg-icon-sprite": "^1.7.1",
     "rxjs": "~6.4.0",
+    "svg2sprite-cli": "^2.0.1",
     "ts-mockito": "^2.4.2",
     "tslib": "^1.9.0",
     "web-animations-js": "^2.3.2",
@@ -52,6 +55,8 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.4.3"
+    "typescript": "~3.4.3",
+    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-cli": "^3.3.10"
   }
 }

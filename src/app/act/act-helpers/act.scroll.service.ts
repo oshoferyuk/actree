@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { upDownKeys } from './act.data.constant';
 
-import { Logger } from '@admc-common/core';
-const log = new Logger('ActScrollService');
+
+
 
 @Injectable()
 export class ActScrollService
@@ -17,7 +17,7 @@ export class ActScrollService
 
         if (!firstNode)
         {
-            log.warn('[moveScroll] invoked with not existing nodes');
+            console.warn('[moveScroll] invoked with not existing nodes');
         }
 
         const treeContainer = treeEl.nativeElement.querySelector('tree-viewport');

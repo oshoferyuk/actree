@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ITreeNode } from 'angular-tree-component/dist/defs/api';
-import { Logger } from '@admc-common/core';
-
-const log = new Logger('ActSelectionService');
 
 @Injectable()
 export class ActSelectionService
@@ -80,7 +77,7 @@ export class ActSelectionService
     {
         if (nodeLevels.length < 1)
         {
-            log.warn('[selectGetLevelClassName] invoke selectActiveGroup for empty set');
+            console.warn('[selectGetLevelClassName] invoke selectActiveGroup for empty set');
             return;
         }
 
@@ -126,7 +123,7 @@ export class ActSelectionService
         const activatedSiblingsPosition = this._getActiveGroupBoundaries(nodeLevelsAllSiblings);
         if (activatedSiblingsPosition.end === -1 || activatedSiblingsPosition.start === -1)
         {
-            log.warn('[selectGetGroupSiblings] sibling positions are not found');
+            console.warn('[selectGetGroupSiblings] sibling positions are not found');
         }
 
         // this.cleanSiblingActiveGroup(renderer, nodeLevelsAllSiblings);

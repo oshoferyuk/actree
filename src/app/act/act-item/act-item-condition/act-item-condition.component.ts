@@ -6,14 +6,15 @@
 //    Contains active configuration tree item condition component.
 // </summary>
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 
 import { IConditionName } from '../../act-helpers/act.data.model';
 
 @Component({
     selector: 'adm-act-item-condition',
     templateUrl: './act-item-condition.component.html',
-    styleUrls: ['./act-item-condition.component.scss']
+    styleUrls: ['./act-item-condition.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActItemConditionComponent {
     @Input('name') name: IConditionName[];
@@ -29,4 +30,8 @@ export class ActItemConditionComponent {
             this.captured.emit(index);
         }
     }
+
+  trackByFn(index, item) {
+    return index; // or item.id
+  }
 }

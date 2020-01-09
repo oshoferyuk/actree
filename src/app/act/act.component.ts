@@ -7,14 +7,14 @@
 // </summary>
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    OnInit,
-    Renderer2,
-    ViewChild,
-    ViewEncapsulation
+  AfterViewInit, ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 import {
     IActionMapping,
@@ -23,16 +23,17 @@ import {
     TreeComponent,
     TreeNode
 } from 'angular-tree-component';
-import { ActDataService } from '@admc-common/shared/act/act-helpers/act.data.service';
+import { ActDataService } from './act-helpers/act.data.service';
 import { ActSelectionService } from './act-helpers/act.selection.service';
 import { ActScrollService } from './act-helpers/act.scroll.service';
 import { ActMappingService } from './act-helpers/act.mapping.service';
 
 @Component({
-    selector: 'adm-act',
+    selector: 'app-act',
     templateUrl: './act.component.html',
     styleUrls: ['./act.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActComponent implements OnInit, AfterViewInit
 {
@@ -82,12 +83,14 @@ export class ActComponent implements OnInit, AfterViewInit
 
     options: ITreeOptions = {
         useVirtualScroll: true,
-        levelPadding: 30,
-        actionMapping: this.actionMapping,
+      dropSlotHeight: 3,
+      nodeHeight: 20,
+      levelPadding: 10,
+      //  actionMapping: this.actionMapping,
         // allowDrag: (node) => node.isLeaf,
         // allowDrop: (node) => node.isLeaf,
-        scrollOnActivate: false,
-        scrollContainer: document.body.parentElement as HTMLElement
+        //scrollOnActivate: false,
+        //scrollContainer: document.body.parentElement as HTMLElement
     };
 
     nodeLevels: HTMLElement[] = []; // all nodes up from selected, up to active node level 1
@@ -110,7 +113,8 @@ export class ActComponent implements OnInit, AfterViewInit
 
     ngOnInit()
     {
-        this.dataHelper.select().subscribe(data =>
+
+      this.dataHelper.select().subscribe(data =>
         {
             this.treeData = data;
         });
@@ -118,10 +122,11 @@ export class ActComponent implements OnInit, AfterViewInit
 
     ngAfterViewInit()
     {
+console.log('AAAAAAAA')
         this.tree.treeModel.expandAll();
 
-        this.options.useVirtualScroll = false;
-        this.cdr.detectChanges();
+        //this.options.useVirtualScroll = false;
+        //this.cdr.detectChanges();
     }
 
     onFocus(event: any)
@@ -133,8 +138,9 @@ export class ActComponent implements OnInit, AfterViewInit
         this.focused = true;
         this.currentSelectedNode = event.node;
 
-        this.cleanSelection();
-        this.cdr.detectChanges(); // click node on the selection
+        //this.cleanSelection();
+
+        //this.cdr.detectChanges(); // click node on the selection
 
         const nodeContentWrapperNodes = Array.prototype.slice.call(
             this.el.nativeElement.querySelectorAll('.node-content-wrapper-focused', 0)
