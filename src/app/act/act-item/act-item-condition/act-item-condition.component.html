@@ -1,18 +1,16 @@
 <div class="act-item-condition">
     <div>i</div>
     <div class="act-item-condition__conditions">
-        <div *ngFor="let row of name;trackBy: trackByFn; let i = index" class="act-item-condition__row">
+        <div *ngFor="let row of name;trackBy: trackByFn; let i = index">
                 <div class="node-content-condition__pre">
                     {{ row.pre }}
                 </div>
-                <div
-                    class="act-item-condition__content"
-                    (click)="onClick($event)"
+                <div (click)="onClick($event)"
                     [ngClass]="{ 'node-content-condition--active': i == selected }"
                     [attr.data-condition-index]="i">
                     {{ row.condition }}
                 </div>
-                <div class="node-content-condition__post">
+                <div>
                     {{ row.post }}
                 </div>
         </div>
