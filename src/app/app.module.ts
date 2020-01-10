@@ -16,6 +16,8 @@ import {ActSelectionService} from "./act/act-helpers/act.selection.service";
 import {ActScrollService} from "./act/act-helpers/act.scroll.service";
 import {ActMappingService} from "./act/act-helpers/act.mapping.service";
 import {ActDataService} from "./act/act-helpers/act.data.service";
+import {AppConfigService} from "../configuration.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -32,9 +34,11 @@ import {ActDataService} from "./act/act-helpers/act.data.service";
     AppRoutingModule,
     BrowserAnimationsModule,
     ActModule,
+    MatIconModule,
+    HttpClientModule,
     IconSpriteModule
   ],
-  providers: [ActSelectionService, ActScrollService, ActMappingService, ActDataService],
+  providers: [AppConfigService, ActSelectionService, ActScrollService, ActMappingService, ActDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
